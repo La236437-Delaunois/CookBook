@@ -526,4 +526,8 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
+<<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore,visualstudio
+=======
+# End of https://www.toptal.com/developers/gitignore/api/aspnetcore,visualstudio
+>>>>>>> c853a3130d240afacef2b81ebd46a2af63fd1f55
