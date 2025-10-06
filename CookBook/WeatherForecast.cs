@@ -10,4 +10,22 @@ namespace CookBook
 
         public string? Summary { get; set; }
     }
+
+    public class User
+    {
+        public int Id { get; set; }
+        public String email { get; set; }
+        public String password { get; set; }
+        public String username { get; set; }
+    }
+
+    public class Recipe
+    {
+        public int Id { get; set; }
+        public String title { get; set; }
+        public String description { get; set; }
+        public String photo { get; set; }
+    }
+
+
 }
