@@ -7,6 +7,8 @@ namespace CookBook.Models
         public string description_recette { get; set; }
         public string photo_recette { get; set; }
         public List<Ingredient> Ingredients { get; set; }
-
+        public Utilisateur utilisateur { get; set; }
+        public Categorie categorie { get; set; }
+        public List<Etapes> etapes { get; set; }
     }
 }
