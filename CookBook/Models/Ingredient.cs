@@ -6,3 +6,4 @@ namespace CookBook.Models
         public string nom_ingredient { get; set; }
     }
 }
+
