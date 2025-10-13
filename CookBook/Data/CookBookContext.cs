@@ -14,7 +14,6 @@ namespace CookBook.Data
         {
         }
 
-        public DbSet<CookBook.Models.Utilisateur> Utilisateur { get; set; } = default!;
         public DbSet<CookBook.Models.Role> Role { get; set; } = default!;
     }
 }
