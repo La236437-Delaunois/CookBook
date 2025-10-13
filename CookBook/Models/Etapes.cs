@@ -2,12 +2,11 @@
 {
     public class Etapes
     {
-        public int id_etape;
-        public int titre_etape;
-        public string description_etape;
-
-        public int Id_recette;
-        public Recette Recette;
+        public int Id { get; set; }
+        public int titre_etape { get; set; }
+        public string description_etape { get; set; }
+        public int Id_recette { get; set; }
+        public Recette Recette  { get; set; }
 
 
     }
