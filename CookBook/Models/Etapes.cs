@@ -6,5 +6,9 @@
         public int titre_etape;
         public string description_etape;
 
+        public int Id_recette;
+        public Recette Recette;
+
+
     }
 }
