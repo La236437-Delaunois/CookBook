@@ -6,5 +6,7 @@
         public int Id_categorie { get; set; }
         // Nom de la catégorie "
         public string nom_categorie { get; set; }
+
+        public List<Recette> Recettes { get; set; }
     }
 }
