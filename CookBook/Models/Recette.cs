@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+﻿namespace CookBook.Models
+{
+    public class Recette
+    {
+=======
 namespace CookBook.Models
 {
     public class Recette
@@ -10,5 +16,6 @@ namespace CookBook.Models
         public Utilisateur utilisateur { get; set; }
         public Categorie categorie { get; set; }
         public List<Etapes> etapes { get; set; }
+>>>>>>> a44271190241a6fd919a6ef909a9213acb8f7bbf
     }
 }
