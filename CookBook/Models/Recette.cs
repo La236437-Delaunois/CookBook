@@ -1,4 +1,4 @@
-namespace CookBook.Models
+﻿namespace CookBook.Models
 {
     public class Recette
     {
@@ -6,7 +6,20 @@ namespace CookBook.Models
         public string titre_recette { get; set; }
         public string description_recette { get; set; }
         public string photo_recette { get; set; }
-        public List<Ingredient> Ingredients { get; set; }
 
+        public int utilisateurId { get; set; }
+        public Utilisateur utilisateur { get; set; }
+
+        public int CategorieId { get; set; }
+        public Categorie categorie { get; set; }
+
+        // Liste des étapes de la recette
+        public List<Etapes> etapes { get; set; } = new List<Etapes>();
+
+        // Liste des ingrédients de la recette (avec leur quantité)
+        public List<RecetteIngredient> recetteIngredients { get; set; } = new List<RecetteIngredient>();
+
+        // Liste des utilisateurs qui ont marqué cette recette comme favorite 
+        public List<RecetteFavoris> recetteFavoris { get; set; } = new List<RecetteFavoris>();
     }
 }
