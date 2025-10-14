@@ -19,5 +19,8 @@ namespace CookBook.Data
         public DbSet<CookBook.Models.Ingredient> Ingredient { get; set; } = default!;
         public DbSet<CookBook.Models.Categorie> Categorie { get; set; } = default!;
         public DbSet<CookBook.Models.Etapes> Etapes { get; set; } = default!;
+
+        
+
     }
 }
