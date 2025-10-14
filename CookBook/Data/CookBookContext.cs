@@ -26,6 +26,17 @@ namespace CookBook.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Recette>()
+                .HasOne(r => r.categorie)
+                .WithMany(c => c.Recettes);
+
+            modelBuilder.Entity<Recette>()
+                .HasOne(rec => rec.utilisateur)
+                .WithMany(util => util.recettes);
+
+            modelBuilder.Entity<Recette>()
+                .HasMany(rec => rec.etapes)
+                .WithOne(etape => etape.Recette);
 
             modelBuilder.Entity<RecetteIngredient>()
                 .HasKey(recing => new { recing.recetteId, recing.ingredientId });
@@ -57,11 +68,6 @@ namespace CookBook.Data
                 .HasOne(recfav => recfav.recette)
                 .WithMany(r => r.recetteFavoris)
                 .HasForeignKey(recfav => recfav.recetteId);
-
-            modelBuilder.Entity<Recette>()
-                .HasOne(r => r.categorie)
-                .WithMany(c => c.Recettes)
-                .HasForeignKey(r => r.CategorieId);
         }
     }
 }
