@@ -18,8 +18,5 @@
 
         // Liste des ingrédients de la recette (avec leur quantité)
         public List<RecetteIngredient> recetteIngredients { get; set; } = new List<RecetteIngredient>();
-
-        // Liste des utilisateurs qui ont marqué cette recette comme favorite 
-        public List<RecetteFavoris> recetteFavoris { get; set; } = new List<RecetteFavoris>();
     }
 }

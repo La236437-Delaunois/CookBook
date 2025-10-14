@@ -18,7 +18,6 @@ namespace CookBook.Data
         public DbSet<CookBook.Models.Recette> Recette { get; set; } = default!;
         public DbSet<CookBook.Models.Ingredient> Ingredient { get; set; } = default!;
         public DbSet<CookBook.Models.RecetteIngredient> RecetteIngredients { get; set; } = default!;
-        public DbSet<CookBook.Models.RecetteFavoris> RecetteFavoris { get; set; } = default!;
         public DbSet<CookBook.Models.Categorie> Categorie { get; set; } = default!;
         public DbSet<CookBook.Models.Etapes> Etapes { get; set; } = default!;
 
@@ -53,21 +52,6 @@ namespace CookBook.Data
                 .WithMany(ing => ing.recetteIngredients)
                 .HasForeignKey(recing => recing.ingredientId);
 
-
-            modelBuilder.Entity<RecetteFavoris>()
-                .HasKey(recfav => new { recfav.utilisateurId, recfav.recetteId });
-
-            // (table intermédiaire) Pour relier les utilisateurs avec cette table intermédiaire
-            modelBuilder.Entity<RecetteFavoris>()
-                .HasOne(recfav => recfav.utilisateur)
-                .WithMany(util => util.recetteFavoris)
-                .HasForeignKey(recfav => recfav.utilisateurId);
-
-            // (table intermédiaire) Pour relier les recettes avec cette table intermédiaire
-            modelBuilder.Entity<RecetteFavoris>()
-                .HasOne(recfav => recfav.recette)
-                .WithMany(r => r.recetteFavoris)
-                .HasForeignKey(recfav => recfav.recetteId);
         }
     }
 }
