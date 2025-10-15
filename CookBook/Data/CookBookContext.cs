@@ -31,7 +31,11 @@ namespace CookBook.Data
 
             modelBuilder.Entity<Recette>()
                 .HasOne(rec => rec.utilisateur)
-                .WithMany(util => util.recettes);
+                .WithMany(util => util.RecettesCrees);
+
+            modelBuilder.Entity<Recette>()
+                .HasOne(rec => rec.utilisateur)
+                .WithMany(util => util.RecettesCrees);
 
             modelBuilder.Entity<Recette>()
                 .HasMany(rec => rec.etapes)

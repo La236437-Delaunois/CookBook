@@ -18,5 +18,7 @@
 
         // Liste des ingrédients de la recette (avec leur quantité)
         public List<RecetteIngredient> recetteIngredients { get; set; } = new List<RecetteIngredient>();
+
+        public List<Utilisateur> utilisateursFavoris { get; set; } = new List<Utilisateur>();
     }
 }
