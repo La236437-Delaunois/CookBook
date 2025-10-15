@@ -9,6 +9,8 @@
 
         public int utilisateurId { get; set; }
         public Utilisateur utilisateur { get; set; }
+        
+        public List<Utilisateur> utilisateursFavoris { get; set; } = new List<Utilisateur>();
 
         public int CategorieId { get; set; }
         public Categorie categorie { get; set; }
@@ -18,8 +20,5 @@
 
         // Liste des ingrédients de la recette (avec leur quantité)
         public List<RecetteIngredient> recetteIngredients { get; set; } = new List<RecetteIngredient>();
-
-        // Liste des utilisateurs qui ont marqué cette recette comme favorite 
-        public List<RecetteFavoris> recetteFavoris { get; set; } = new List<RecetteFavoris>();
     }
 }
