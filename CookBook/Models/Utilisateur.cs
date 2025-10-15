@@ -9,5 +9,9 @@
 
         public int RoleId { get; set; }
         public Role Role { get; set; }
+
+        /* Listes de recette*/
+        public ICollection<Recette> RecettesCrees { get; set; }
+        public ICollection<Recette> RecettesFavoris { get; set; }
     }
 }
