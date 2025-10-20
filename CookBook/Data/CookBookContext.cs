@@ -25,6 +25,10 @@ namespace CookBook.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Role>()
+                .HasMany(r => r.Utilisateurs)
+                .WithOne(u => u.Role);
+
             modelBuilder.Entity<Recette>()
                 .HasOne(r => r.categorie)
                 .WithMany(c => c.Recettes);
