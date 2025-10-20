@@ -21,6 +21,8 @@ namespace CookBook.Data
         public DbSet<CookBook.Models.Categorie> Categorie { get; set; } = default!;
         public DbSet<CookBook.Models.Etapes> Etapes { get; set; } = default!;
 
+        public DbSet<CookBook.Models.Utilisateur> Utilisateurs { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -28,6 +30,18 @@ namespace CookBook.Data
             modelBuilder.Entity<Role>()
                 .HasMany(r => r.Utilisateurs)
                 .WithOne(u => u.Role);
+
+            modelBuilder.Entity<Utilisateur>()
+                .HasOne(u => u.Role)
+                .WithMany(r => r.Utilisateurs);
+
+            modelBuilder.Entity<Utilisateur>()
+                .HasMany(u => u.RecettesCrees)
+                .WithOne(r => r.utilisateur);
+
+            modelBuilder.Entity<Utilisateur>()
+                .HasMany(u => u.RecettesFavoris)
+                .WithMany(r => r.utilisateursFavoris);
 
             modelBuilder.Entity<Recette>()
                 .HasOne(r => r.categorie)
@@ -61,5 +75,6 @@ namespace CookBook.Data
                 .HasForeignKey(recing => recing.ingredientId);
 
         }
+        public DbSet<CookBook.Models.Utilisateur> Utilisateur { get; set; } = default!;
     }
 }
