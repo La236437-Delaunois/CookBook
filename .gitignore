@@ -525,9 +525,6 @@ FodyWeavers.xsd
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
-
-CookBook/appsettings.json
-
 <<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore,visualstudio
 =======
