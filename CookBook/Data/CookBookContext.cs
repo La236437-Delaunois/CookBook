@@ -21,7 +21,7 @@ namespace CookBook.Data
         public DbSet<CookBook.Models.Categorie> Categorie { get; set; } = default!;
         public DbSet<CookBook.Models.Etapes> Etapes { get; set; } = default!;
 
-        public DbSet<CookBook.Models.Utilisateur> Utilisateurs { get; set; } = default!;
+        public DbSet<CookBook.Models.Utilisateur> Utilisateur { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
