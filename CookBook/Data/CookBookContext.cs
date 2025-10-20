@@ -74,6 +74,14 @@ namespace CookBook.Data
                 .WithMany(ing => ing.recetteIngredients)
                 .HasForeignKey(recing => recing.ingredientId);
 
+            modelBuilder.Entity<Categorie>()
+                .HasMany(c => c.Recettes)
+                .WithOne(r => r.categorie);
+
+            modelBuilder.Entity<Etapes>()
+                .HasOne(e => e.Recette)
+                .WithMany(r => r.etapes);
+
         }
         public DbSet<CookBook.Models.Utilisateur> Utilisateur { get; set; } = default!;
     }
