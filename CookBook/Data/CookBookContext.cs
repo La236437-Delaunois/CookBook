@@ -83,6 +83,5 @@ namespace CookBook.Data
                 .WithMany(r => r.etapes);
 
         }
-        public DbSet<CookBook.Models.Utilisateur> Utilisateur { get; set; } = default!;
     }
 }
