@@ -75,6 +75,5 @@ namespace CookBook.Data
                 .HasForeignKey(recing => recing.ingredientId);
 
         }
-        public DbSet<CookBook.Models.Utilisateur> Utilisateur { get; set; } = default!;
     }
 }
