@@ -1,4 +1,6 @@
-﻿namespace CookBook.Models
+﻿using System.Text.Json.Serialization;
+
+namespace CookBook.Models
 {
     public class RecetteIngredient
     {
@@ -6,6 +8,8 @@
         public Recette recette { get; set; }
 
         public int ingredientId { get; set; }
+
+        [JsonIgnore]
         public Ingredient ingredient { get; set; }
 
         // Quantité de l'ingrédient dans la recette (ex: "2 tasses", "1 cuillère à soupe", etc.)
