@@ -1,4 +1,6 @@
-﻿namespace CookBook.Models
+﻿using System.Text.Json.Serialization;
+
+namespace CookBook.Models
 {
     public class Etapes
     {
@@ -6,6 +8,8 @@
         public int titre_etape { get; set; }
         public string description_etape { get; set; }
         public int Id_recette { get; set; }
+
+        [JsonIgnore]
         public Recette Recette  { get; set; }
 
 
