@@ -8,6 +8,6 @@ namespace CookBook.Models
         public string nom_role { get; set; }
         /* Les Rôles : Admin et Utilisateur */
         [JsonIgnore]
-        public ICollection<Utilisateur> Utilisateurs { get; set; }
+        public ICollection<Utilisateur>? Utilisateurs { get; set; }
     }
 }
