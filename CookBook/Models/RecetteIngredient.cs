@@ -5,6 +5,8 @@ namespace CookBook.Models
     public class RecetteIngredient
     {
         public int recetteId { get; set; }
+
+        [JsonIgnore]
         public Recette recette { get; set; }
 
         public int ingredientId { get; set; }
