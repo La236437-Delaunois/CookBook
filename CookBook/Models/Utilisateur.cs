@@ -1,4 +1,6 @@
-﻿namespace CookBook.Models
+﻿using System.Text.Json.Serialization;
+
+namespace CookBook.Models
 {
     public class Utilisateur
     {
@@ -11,7 +13,9 @@
         public Role Role { get; set; }
 
         /* Listes de recette*/
+        [JsonIgnore]
         public ICollection<Recette> RecettesCrees { get; set; }
+        [JsonIgnore]
         public ICollection<Recette> RecettesFavoris { get; set; }
     }
 }
