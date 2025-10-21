@@ -1,4 +1,6 @@
-﻿namespace CookBook.Models
+﻿using System.Text.Json.Serialization;
+
+namespace CookBook.Models
 {
     public class Categorie
     {
@@ -6,7 +8,7 @@
         public int Id { get; set; } 
         // Nom de la catégorie "
         public string nom_categorie { get; set; }
-
+        [JsonIgnore]
         public List<Recette> Recettes { get; set; }
     }
 }
