@@ -1,6 +1,7 @@
 ﻿using CookBook.Data;
 using CookBook.Models;
 using CookBook.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
@@ -14,6 +15,7 @@ namespace CookBook.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UtilisateursController : ControllerBase
     {
         private readonly CookBookContext _context;
@@ -78,6 +80,7 @@ namespace CookBook.Controllers
         // POST: api/Utilisateurs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Utilisateur>> PostUtilisateur(Utilisateur utilisateur)
         {
             _context.Utilisateur.Add(utilisateur);
