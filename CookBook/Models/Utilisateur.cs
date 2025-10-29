@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Text.Json.Serialization;
 
 namespace CookBook.Models
 {
@@ -10,12 +11,13 @@ namespace CookBook.Models
         public string MotDePasse { get; set; }
 
         public int RoleId { get; set; }
+        [ValidateNever]
         public Role Role { get; set; }
 
         /* Listes de recette*/
         [JsonIgnore]
-        public ICollection<Recette> RecettesCrees { get; set; }
+        public ICollection<Recette>? RecettesCrees { get; set; }
         [JsonIgnore]
-        public ICollection<Recette> RecettesFavoris { get; set; }
+        public ICollection<Recette>? RecettesFavoris { get; set; }
     }
 }
