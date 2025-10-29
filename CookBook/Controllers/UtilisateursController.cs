@@ -1,12 +1,14 @@
-﻿using System;
+﻿using CookBook.Data;
+using CookBook.Models;
+using CookBook.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CookBook.Data;
-using CookBook.Models;
 
 namespace CookBook.Controllers
 {
@@ -83,6 +85,34 @@ namespace CookBook.Controllers
 
             return CreatedAtAction("GetUtilisateur", new { id = utilisateur.Id }, utilisateur);
         }
+
+        [HttpPost("/login")]
+        public async Task<ActionResult<Utilisateur>> Login([FromForm] string Pseudo, [FromForm] string MotDePasse)
+        {
+            var userExists = UserExists(Pseudo, MotDePasse);
+            if (userExists == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                // Generate Token and return it 
+                var token = new AuthorizationService().CreateToken(userExists);
+                // TODO: Create JSON Model class for returning token structured
+                return Ok(token);
+            }
+        }
+
+        private Utilisateur UserExists(string username, string password)
+        {
+            var user = _context.Utilisateur.First(u => u.Pseudo == username);
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.MotDePasse))
+            {
+                return user;
+            }
+            return null;
+        }
+
 
         // DELETE: api/Utilisateurs/5
         [HttpDelete("{id}")]
