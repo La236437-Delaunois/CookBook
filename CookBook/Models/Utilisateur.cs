@@ -11,7 +11,8 @@ namespace CookBook.Models
         public string MotDePasse { get; set; }
 
         public int RoleId { get; set; }
-        [JsonIgnore]
+
+        [ValidateNever]
         public Role Role { get; set; }
 
         /* Listes de recette*/
