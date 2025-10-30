@@ -15,7 +15,6 @@ namespace CookBook.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UtilisateursController : ControllerBase
     {
         private readonly CookBookContext _context;
@@ -27,6 +26,7 @@ namespace CookBook.Controllers
 
         // GET: api/Utilisateurs
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Utilisateur>>> GetUtilisateur()
         {
             return await _context.Utilisateur.ToListAsync();
@@ -34,6 +34,7 @@ namespace CookBook.Controllers
 
         // GET: api/Utilisateurs/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Utilisateur>> GetUtilisateur(int id)
         {
             var utilisateur = await _context.Utilisateur.FindAsync(id);
@@ -49,6 +50,7 @@ namespace CookBook.Controllers
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> PutUtilisateur(int id, Utilisateur utilisateur)
         {
             if (id != utilisateur.Id)
@@ -90,6 +92,7 @@ namespace CookBook.Controllers
         }
 
         [HttpPost("/login")]
+        [AllowAnonymous]
         public async Task<ActionResult<Utilisateur>> Login([FromForm] string Pseudo, [FromForm] string MotDePasse)
         {
             var userExists = UserExists(Pseudo, MotDePasse);
@@ -119,6 +122,7 @@ namespace CookBook.Controllers
 
         // DELETE: api/Utilisateurs/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteUtilisateur(int id)
         {
             var utilisateur = await _context.Utilisateur.FindAsync(id);
