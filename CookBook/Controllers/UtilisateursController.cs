@@ -85,6 +85,12 @@ namespace CookBook.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<Utilisateur>> PostUtilisateur(Utilisateur utilisateur)
         {
+            if (utilisateur.MotDePasse != null)
+            {
+                var salt = BCrypt.Net.BCrypt.GenerateSalt();
+                utilisateur.MotDePasse = BCrypt.Net.BCrypt.HashPassword(utilisateur.MotDePasse, salt);
+            }
+
             _context.Utilisateur.Add(utilisateur);
             await _context.SaveChangesAsync();
 
