@@ -44,10 +44,8 @@ namespace CookBook.Services
             Claims.AddClaim(new Claim(ClaimTypes.Name, user.Pseudo)); //obligatoire 
             Claims.AddClaim(new Claim(ClaimTypes.Email, user.Email)); //obligatoire
             Claims.AddClaim(new Claim("id", user.Id.ToString())); //claim personnalisé
-            if (user.Role != null)
-            {
-                Claims.AddClaim(new Claim(ClaimTypes.Role, user.Role.nom_role));
-            }
+            Claims.AddClaim(new Claim(ClaimTypes.Role, user.Role.nom_role));
+            
 
 
             return Claims;
