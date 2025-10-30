@@ -109,11 +109,36 @@ namespace CookBook.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<Utilisateur>> PostUtilisateur(Utilisateur utilisateur)
         {
-            if (!_context.Role.Any(r => r.Id == utilisateur.RoleId)) 
+            utilisateur.Pseudo = utilisateur.Pseudo?.Trim();
+            utilisateur.Email = utilisateur.Email?.Trim();
+
+            if (string.IsNullOrWhiteSpace(utilisateur.Pseudo) ||
+                string.IsNullOrWhiteSpace(utilisateur.Email) ||
+                string.IsNullOrWhiteSpace(utilisateur.MotDePasse))
             {
-                return BadRequest("RoleId invalide.");
+                ModelState.AddModelError("Input", "Pseudo, Email et MotDePasse sont requis.");
+                return ValidationProblem(ModelState);
             }
-                
+
+            if (!await _context.Role.AnyAsync(r => r.Id == utilisateur.RoleId))
+            {
+                ModelState.AddModelError("RoleId", "RoleId invalide.");
+                return ValidationProblem(ModelState);
+            }
+
+            var pseudoLower = utilisateur.Pseudo.ToLowerInvariant();
+            var emailLower = utilisateur.Email.ToLowerInvariant();
+
+            var pseudoExists = await _context.Utilisateur.AnyAsync(u => u.Pseudo.ToLower() == pseudoLower);
+            var emailExists = await _context.Utilisateur.AnyAsync(u => u.Email.ToLower() == emailLower);
+
+            if (pseudoExists)
+                ModelState.AddModelError("Pseudo", "Le pseudo existe déjà.");
+            if (emailExists)
+                ModelState.AddModelError("Email", "L'email existe déjà.");
+            if (pseudoExists || emailExists)
+                return ValidationProblem(ModelState);
+
 
             if (utilisateur.MotDePasse != null)
             {
@@ -150,10 +175,20 @@ namespace CookBook.Controllers
 
         private Utilisateur UserExists(string username, string password)
         {
-            var user = _context.Utilisateur.First(u => u.Pseudo == username);
-            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.MotDePasse))
+            var user = _context.Utilisateur
+                       .Include(u => u.Role) 
+                       .FirstOrDefault(u => u.Pseudo == username);
+
+            if (user == null) return null;
+
+            try
             {
-                return user;
+                if (BCrypt.Net.BCrypt.Verify(password, user.MotDePasse ?? string.Empty))
+                    return user;
+            }
+            catch (BCrypt.Net.SaltParseException)
+            {
+                return null;
             }
             return null;
         }
