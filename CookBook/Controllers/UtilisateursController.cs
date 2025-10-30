@@ -29,7 +29,9 @@ namespace CookBook.Controllers
         [Authorize]
         public async Task<ActionResult<IEnumerable<Utilisateur>>> GetUtilisateur()
         {
-            return await _context.Utilisateur.ToListAsync();
+            return await _context.Utilisateur
+                                 .Include(u => u.Role)
+                                 .ToListAsync();
         }
 
         // GET: api/Utilisateurs/5
@@ -37,7 +39,9 @@ namespace CookBook.Controllers
         [Authorize]
         public async Task<ActionResult<Utilisateur>> GetUtilisateur(int id)
         {
-            var utilisateur = await _context.Utilisateur.FindAsync(id);
+            var utilisateur = await _context.Utilisateur
+                                            .Include(u => u.Role)
+                                            .FirstOrDefaultAsync(u => u.Id == id);
 
             if (utilisateur == null)
             {
@@ -85,6 +89,12 @@ namespace CookBook.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<Utilisateur>> PostUtilisateur(Utilisateur utilisateur)
         {
+            if (!_context.Role.Any(r => r.Id == utilisateur.RoleId)) 
+            {
+                return BadRequest("RoleId invalide.");
+            }
+                
+
             if (utilisateur.MotDePasse != null)
             {
                 var salt = BCrypt.Net.BCrypt.GenerateSalt();
@@ -93,6 +103,9 @@ namespace CookBook.Controllers
 
             _context.Utilisateur.Add(utilisateur);
             await _context.SaveChangesAsync();
+
+            await _context.Entry(utilisateur).Reference(u => u.Role).LoadAsync();
+
 
             return CreatedAtAction("GetUtilisateur", new { id = utilisateur.Id }, utilisateur);
         }
