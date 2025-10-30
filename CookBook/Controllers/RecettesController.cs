@@ -44,6 +44,28 @@ namespace CookBook.Controllers
             return recette;
         }
 
+        // GET: api/Recettes/Categorie/5
+        [HttpGet("Categorie/{categorieId}")]
+        public async Task<ActionResult<IEnumerable<Recette>>> GetRecettesByCategorie(int categorieId)
+        {
+            var recettes = await _context.Recette
+                                         .Where(r => r.CategorieId == categorieId)
+                                         .ToListAsync();
+            return recettes;
+        }
+
+        // GET: api/Recettes/Utilisateur/5
+        [HttpGet("Utilisateur/{utilisateurId}")]
+        public async Task<ActionResult<IEnumerable<Recette>>> GetRecettesByUtilisateur(int utilisateurId)
+        {
+            var recettes = await _context.Recette
+                                         .Where(r => r.utilisateurId == utilisateurId)
+                                         .ToListAsync();
+            return recettes;
+        }
+
+
+
         // PUT: api/Recettes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
