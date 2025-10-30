@@ -62,7 +62,25 @@ namespace CookBook.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(utilisateur).State = EntityState.Modified;
+            if (!_context.Role.Any(r => r.Id == utilisateur.RoleId))
+            {
+                return BadRequest("RoleId invalide.");
+            }
+
+            var existing = await _context.Utilisateur.FindAsync(id);
+            if (existing == null)
+            {
+                return NotFound();
+            }
+
+            existing.Pseudo = utilisateur.Pseudo;
+            existing.Email = utilisateur.Email;
+            existing.RoleId = utilisateur.RoleId;
+
+            if (!string.IsNullOrEmpty(utilisateur.MotDePasse))
+            {
+                existing.MotDePasse = BCrypt.Net.BCrypt.HashPassword(utilisateur.MotDePasse);
+            }
 
             try
             {
@@ -80,7 +98,9 @@ namespace CookBook.Controllers
                 }
             }
 
-            return NoContent();
+            await _context.Entry(existing).Reference(u => u.Role).LoadAsync();
+
+            return Ok(existing);
         }
 
         // POST: api/Utilisateurs
