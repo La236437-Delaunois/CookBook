@@ -44,6 +44,21 @@ namespace CookBook.Controllers
             return recetteIngredient;
         }
 
+        // GET: api/RecetteIngredients/Recette/5
+        [HttpGet("Recette/{recetteId}")]
+        public async Task<ActionResult<IEnumerable<RecetteIngredient>>> GetIngredientsByRecette(int recetteId)
+        {
+            var ingredients = await _context.RecetteIngredients
+                .Where(ri => ri.recetteId == recetteId)
+                .ToListAsync();
+
+            if (ingredients.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return ingredients;
+        }
 
         // PUT: api/RecetteIngredients/5/7
         [HttpPut("{recetteId}/{ingredientId}")]
