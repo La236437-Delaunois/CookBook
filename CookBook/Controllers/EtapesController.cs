@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CookBook.Data;
+using CookBook.Models;
+using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CookBook.Data;
-using CookBook.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace CookBook.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EtapesController : ControllerBase
@@ -19,6 +23,31 @@ namespace CookBook.Controllers
         public EtapesController(CookBookContext context)
         {
             _context = context;
+        }
+        private int CurrentUserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        private bool IsAdmin => User.IsInRole("Admin");
+
+        private async Task<bool> UserOwnsRecetteAsync(int recetteId)
+        {
+            var ownerId = await _context.Recette
+                .Where(r => r.Id == recetteId)
+                .Select(r => r.utilisateurId)
+                .SingleOrDefaultAsync();
+
+            if (ownerId == null) return false;
+            return ownerId == CurrentUserId;
+        }
+
+        private async Task<bool> UserOwnsEtapeAsync(int etapeId)
+        {
+            var ownerId = await _context.Etapes
+                .Where(e => e.Id == etapeId)
+                .Select(e => e.Recette.utilisateurId)
+                .SingleOrDefaultAsync();
+
+            if (ownerId == null) return false;
+            return ownerId == CurrentUserId;
         }
 
         // GET: api/Etapes
@@ -47,29 +76,24 @@ namespace CookBook.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEtapes(int id, Etapes etapes)
         {
-            if (id != etapes.Id)
-            {
-                return BadRequest();
-            }
+            if (id != etapes.Id) return BadRequest();
 
-            _context.Entry(etapes).State = EntityState.Modified;
+            // Charger l'étape avec la recette pour éviter tout spoof de RecetteId
+            var existing = await _context.Etapes
+                .Include(e => e.Recette)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EtapesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            if (existing == null) return NotFound();
 
+            // Autoriser seulement l'owner ou un admin
+            if (!IsAdmin && existing.Recette.utilisateurId != CurrentUserId)
+                return Forbid();
+
+            // Mise à jour "whitelist": on ne permet pas de changer la recette liée
+            existing.titre_etape = etapes.titre_etape;
+            existing.description_etape = etapes.description_etape;
+
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
@@ -78,6 +102,9 @@ namespace CookBook.Controllers
         [HttpPost]
         public async Task<ActionResult<Etapes>> PostEtapes(Etapes etapes)
         {
+            // Vérifier que l'utilisateur est bien owner de la recette ciblée
+            if (!IsAdmin && !await UserOwnsRecetteAsync(etapes.Id_recette))
+                return Forbid();
             _context.Etapes.Add(etapes);
             await _context.SaveChangesAsync();
 
@@ -88,11 +115,14 @@ namespace CookBook.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEtapes(int id)
         {
-            var etapes = await _context.Etapes.FindAsync(id);
-            if (etapes == null)
-            {
-                return NotFound();
-            }
+            var etapes = await _context.Etapes
+                .Include(e => e.Recette)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (etapes == null) return NotFound();
+
+            if (!IsAdmin && etapes.Recette.utilisateurId != CurrentUserId)
+                return Forbid();
 
             _context.Etapes.Remove(etapes);
             await _context.SaveChangesAsync();
