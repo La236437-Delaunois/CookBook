@@ -51,6 +51,12 @@ namespace CookBook.Controllers
             var recettes = await _context.Recette
                                          .Where(r => r.CategorieId == categorieId)
                                          .ToListAsync();
+
+            if (recettes.Count == 0)
+            {
+                return NotFound();
+            }
+
             return recettes;
         }
 
@@ -61,6 +67,12 @@ namespace CookBook.Controllers
             var recettes = await _context.Recette
                                          .Where(r => r.utilisateurId == utilisateurId)
                                          .ToListAsync();
+
+            if (recettes.Count == 0)
+            {
+                return NotFound();
+            }
+
             return recettes;
         }
 
