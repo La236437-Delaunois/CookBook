@@ -30,11 +30,11 @@ namespace CookBook.Controllers
             return await _context.RecetteIngredients.ToListAsync();
         }
 
-        // GET: api/RecetteIngredients/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RecetteIngredient>> GetRecetteIngredient(int id)
+        // GET: api/RecetteIngredients/5/7
+        [HttpGet("{recetteId}/{ingredientId}")]
+        public async Task<ActionResult<RecetteIngredient>> GetRecetteIngredient(int recetteId, int ingredientId)
         {
-            var recetteIngredient = await _context.RecetteIngredients.FindAsync(id);
+            var recetteIngredient = await _context.RecetteIngredients.FindAsync(recetteId, ingredientId);
 
             if (recetteIngredient == null)
             {
