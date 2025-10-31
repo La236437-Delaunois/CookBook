@@ -44,12 +44,12 @@ namespace CookBook.Controllers
             return recetteIngredient;
         }
 
-        // PUT: api/RecetteIngredients/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRecetteIngredient(int id, RecetteIngredient recetteIngredient)
+
+        // PUT: api/RecetteIngredients/5/7
+        [HttpPut("{recetteId}/{ingredientId}")]
+        public async Task<IActionResult> PutRecetteIngredient(int recetteId, int ingredientId, RecetteIngredient recetteIngredient)
         {
-            if (id != recetteIngredient.recetteId)
+            if (recetteId != recetteIngredient.recetteId || ingredientId != recetteIngredient.ingredientId)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace CookBook.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RecetteIngredientExists(id))
+                if (!RecetteIngredientExists(recetteId, ingredientId))
                 {
                     return NotFound();
                 }
@@ -76,35 +76,37 @@ namespace CookBook.Controllers
         }
 
         // POST: api/RecetteIngredients
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<RecetteIngredient>> PostRecetteIngredient(RecetteIngredient recetteIngredient)
         {
+            if (RecetteIngredientExists(recetteIngredient.recetteId, recetteIngredient.ingredientId))
+            {
+                return Conflict("Cette association recette/ingrédient existe déjà.");
+            }
+
             _context.RecetteIngredients.Add(recetteIngredient);
+
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (RecetteIngredientExists(recetteIngredient.recetteId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
-            return CreatedAtAction("GetRecetteIngredient", new { id = recetteIngredient.recetteId }, recetteIngredient);
+            return CreatedAtAction(
+                nameof(GetRecetteIngredient),
+                new { recetteId = recetteIngredient.recetteId, ingredientId = recetteIngredient.ingredientId },
+                recetteIngredient
+            );
         }
 
-        // DELETE: api/RecetteIngredients/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRecetteIngredient(int id)
+        // DELETE: api/RecetteIngredients/5/7
+        [HttpDelete("{recetteId}/{ingredientId}")]
+        public async Task<IActionResult> DeleteRecetteIngredient(int recetteId, int ingredientId)
         {
-            var recetteIngredient = await _context.RecetteIngredients.FindAsync(id);
+            var recetteIngredient = await _context.RecetteIngredients.FindAsync(recetteId, ingredientId);
             if (recetteIngredient == null)
             {
                 return NotFound();
@@ -116,9 +118,9 @@ namespace CookBook.Controllers
             return NoContent();
         }
 
-        private bool RecetteIngredientExists(int id)
+        private bool RecetteIngredientExists(int recetteId, int ingredientId)
         {
-            return _context.RecetteIngredients.Any(e => e.recetteId == id);
+            return _context.RecetteIngredients.Any(e => e.recetteId == recetteId && e.ingredientId == ingredientId);
         }
     }
 }
