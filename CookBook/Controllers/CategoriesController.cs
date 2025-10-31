@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CookBook.Data;
+using CookBook.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CookBook.Data;
-using CookBook.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CookBook.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
@@ -41,7 +43,7 @@ namespace CookBook.Controllers
 
             return categorie;
         }
-
+        [Authorize(Roles = "Admin")]
         // PUT: api/Categories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -72,7 +74,7 @@ namespace CookBook.Controllers
 
             return NoContent();
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -83,7 +85,7 @@ namespace CookBook.Controllers
 
             return CreatedAtAction("GetCategorie", new { id = categorie.Id }, categorie);
         }
-
+        [Authorize(Roles = "Admin")]
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategorie(int id)
