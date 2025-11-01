@@ -70,7 +70,7 @@ using (var scope = app.Services.CreateScope())
     var env = services.GetRequiredService<IWebHostEnvironment>();
     var ctx = services.GetRequiredService<CookBookContext>();
 
-    var sqlPath = Path.Combine(env.ContentRootPath, "DataBase", "seedRole.sql");
+    var sqlPath = Path.Combine(env.ContentRootPath, "DataBase", "seedRole.sql","seedCategorie.sql");
     if (System.IO.File.Exists(sqlPath))
     {
         var sql = await System.IO.File.ReadAllTextAsync(sqlPath);
