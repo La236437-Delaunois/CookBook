@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace CookBook.Models
 {
+    /**
+     * Classe représentant un utilisateur de l'application CookBook.
+     */
     public class Utilisateur
     {
         public int Id { get; set; }
@@ -15,9 +18,10 @@ namespace CookBook.Models
         [ValidateNever]
         public Role Role { get; set; }
 
-        /* Listes de recette*/
+        /* Liste des recettes créées par l'utilisateur */
         [JsonIgnore]
         public ICollection<Recette>? RecettesCrees { get; set; }
+        /* Liste des recettes favorites de l'utilisateur */
         [JsonIgnore]
         public ICollection<Recette>? RecettesFavoris { get; set; }
     }

@@ -2,6 +2,9 @@
 
 namespace CookBook.Models
 {
+    /**
+     * Classe représentant une catégorie de recettes.
+     */
     public class Categorie
     {
         // Id de la catégorie

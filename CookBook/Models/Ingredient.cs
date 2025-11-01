@@ -2,6 +2,9 @@
 
 namespace CookBook.Models
 {
+    /**
+     * Classe représentant un ingrédient utilisé dans les recettes.
+     */
     public class Ingredient
     {
         public int Id { get; set; }

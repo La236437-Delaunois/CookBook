@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace CookBook.Models
 {
+    /**
+     * Classe représentant une recette de cuisine.
+     */
     public class Recette
     {
         public int Id { get; set; }

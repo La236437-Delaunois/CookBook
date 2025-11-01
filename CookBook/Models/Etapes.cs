@@ -2,6 +2,9 @@
 
 namespace CookBook.Models
 {
+    /**
+     * Classe représentant une étape dans une recette.
+     */
     public class Etapes
     {
         public int Id { get; set; } 

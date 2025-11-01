@@ -3,6 +3,10 @@ using System.Text.Json.Serialization;
 
 namespace CookBook.Models
 {
+    /**
+     * Classe représentant la relation entre une recette et un ingrédient,
+     * incluant la quantité de l'ingrédient dans la recette.
+     */
     public class RecetteIngredient
     {
         public int recetteId { get; set; }

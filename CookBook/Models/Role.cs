@@ -2,6 +2,9 @@
 
 namespace CookBook.Models
 {
+    /**
+     * Classe représentant un rôle attribué à un utilisateur.
+     */
     public class Role
     {
         public int Id { get; set; }
