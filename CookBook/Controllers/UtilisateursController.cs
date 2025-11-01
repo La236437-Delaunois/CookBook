@@ -54,6 +54,27 @@ namespace CookBook.Controllers
             return utilisateur;
         }
 
+        // GET: api/Utilisateurs/5/favoris
+        /**
+         * Récupère les recettes favorites d'un utilisateur.
+         * 
+         * @param id L'ID de l'utilisateur.
+         * @return La liste des recettes favorites de l'utilisateur.
+         */
+        [HttpGet("{id}/favoris")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Recette>>> GetRecettesFavoris(int id)
+        {
+            var utilisateur = await _context.Utilisateur
+                                            .Include(u => u.RecettesFavoris)
+                                            .FirstOrDefaultAsync(u => u.Id == id);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+            return Ok(utilisateur.RecettesFavoris);
+        }
+
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -211,6 +232,51 @@ namespace CookBook.Controllers
             return null;
         }
 
+        //POST : api/Utilisateurs/5/favoris/10
+        /**
+         * Ajoute une recette aux favoris de l'utilisateur.
+         * 
+         * @param id L'ID de l'utilisateur.
+         * @param recetteId L'ID de la recette à ajouter aux favoris.
+         * @return NoContent si l'ajout réussit, NotFound si l'utilisateur ou la recette n'existe pas,
+         *         Conflict si la recette est déjà en favoris, Forbid si l'utilisateur n'est pas autorisé.
+         */
+        [HttpPost("{id}/favoris/{recetteId}")]
+        [Authorize]
+        public async Task<IActionResult> AddRecetteFavoris(int id, int recetteId)
+        {
+            var currentUserIdClaim = User.FindFirst("id")?.Value;
+            if (currentUserIdClaim == null || (int.Parse(currentUserIdClaim) != id && !User.IsInRole("Admin")))
+                return Forbid();
+
+            var utilisateur = await _context.Utilisateur
+                                            .Include(u => u.RecettesFavoris)
+                                            .FirstOrDefaultAsync(u => u.Id == id);
+            if (utilisateur == null)
+            {
+                return NotFound("L'utilisateur est inéxistant");
+            }
+            var recette = await _context.Recette.FindAsync(recetteId);
+            if (recette == null)
+            {
+                return NotFound("Recette introuvable");
+            }
+            if (utilisateur.RecettesFavoris == null)
+            {
+                utilisateur.RecettesFavoris = new List<Recette>();
+            }
+
+            if (utilisateur.RecettesFavoris.Any(r => r.Id == recetteId))
+                return Conflict("La recette est déjà en favoris.");
+
+            if (!utilisateur.RecettesFavoris.Any(r => r.Id == recetteId))
+            {
+                utilisateur.RecettesFavoris.Add(recette);
+                await _context.SaveChangesAsync();
+            }
+            return NoContent();
+        }
+
 
         // DELETE: api/Utilisateurs/5
         [HttpDelete("{id}")]
@@ -226,6 +292,43 @@ namespace CookBook.Controllers
             _context.Utilisateur.Remove(utilisateur);
             await _context.SaveChangesAsync();
 
+            return NoContent();
+        }
+
+        // DELETE: api/Utilisateurs/5/favoris/10
+        /**
+         * Supprime une recette des favoris de l'utilisateur.
+         * 
+         * @param id L'ID de l'utilisateur.
+         * @param recetteId L'ID de la recette à supprimer des favoris.
+         * @return NoContent si la suppression réussit, NotFound si l'utilisateur ou la recette n'existe pas,
+         *         Forbid si l'utilisateur n'est pas autorisé.
+         */
+        [HttpDelete("{id}/favoris/{recetteId}")]
+        [Authorize]
+        public async Task<IActionResult> RemoveRecetteFavoris(int id, int recetteId)
+        {
+            var currentUserIdClaim = User.FindFirst("id")?.Value;
+            if (currentUserIdClaim == null || (int.Parse(currentUserIdClaim) != id && !User.IsInRole("Admin")))
+                return Forbid();
+            var utilisateur = await _context.Utilisateur
+                                            .Include(u => u.RecettesFavoris)
+                                            .FirstOrDefaultAsync(u => u.Id == id);
+            if (utilisateur == null)
+            {
+                return NotFound("L'utilisateur est inéxistant");
+            }
+            var recette = await _context.Recette.FindAsync(recetteId);
+            if (recette == null)
+            {
+                return NotFound("Recette introuvable");
+            }
+            if (utilisateur.RecettesFavoris == null || !utilisateur.RecettesFavoris.Any(r => r.Id == recetteId))
+            {
+                return NotFound("La recette n'est pas dans les favoris.");
+            }
+            utilisateur.RecettesFavoris.Remove(recette);
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
