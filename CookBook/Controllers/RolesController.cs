@@ -16,10 +16,12 @@ namespace CookBook.Controllers
     public class RolesController : ControllerBase
     {
         private readonly CookBookContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public RolesController(CookBookContext context)
+        public RolesController(CookBookContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: api/Roles

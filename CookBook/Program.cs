@@ -64,6 +64,20 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var env = services.GetRequiredService<IWebHostEnvironment>();
+    var ctx = services.GetRequiredService<CookBookContext>();
+
+    var sqlPath = Path.Combine(env.ContentRootPath, "DataBase", "seedRole.sql");
+    if (System.IO.File.Exists(sqlPath))
+    {
+        var sql = await System.IO.File.ReadAllTextAsync(sqlPath);
+        await ctx.Database.ExecuteSqlRawAsync(sql);
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
