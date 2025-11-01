@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Text.Json.Serialization;
 
 namespace CookBook.Models
 {
@@ -12,11 +13,13 @@ namespace CookBook.Models
         public int utilisateurId { get; set; }
 
         [JsonIgnore]
+        [ValidateNever]
         public Utilisateur utilisateur { get; set; }
 
         public int CategorieId { get; set; }
 
         [JsonIgnore]
+        [ValidateNever]
         public Categorie categorie { get; set; }
 
         // Liste des étapes de la recette
