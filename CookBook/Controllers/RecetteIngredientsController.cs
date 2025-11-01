@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.Controllers
 {
+    /**
+     * Contrôleur pour gérer les opérations CRUD sur les associations entre recettes et ingrédients.
+     */
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -90,6 +93,12 @@ namespace CookBook.Controllers
             return NoContent();
         }
 
+        /**
+         * Crée une nouvelle association entre une recette et un ingrédient.
+         * Vérifie d'abord si l'association existe déjà pour éviter les doublons.
+         * 
+         * @param recetteIngredient L'association recette/ingrédient à créer.
+         */
         // POST: api/RecetteIngredients
         [HttpPost]
         public async Task<ActionResult<RecetteIngredient>> PostRecetteIngredient(RecetteIngredient recetteIngredient)

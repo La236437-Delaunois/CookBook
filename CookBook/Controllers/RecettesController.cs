@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.Controllers
 {
+    /**
+     * Contrôleur pour gérer les opérations CRUD sur les recettes.
+     */
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -44,6 +47,9 @@ namespace CookBook.Controllers
             return recette;
         }
 
+        /**
+         * Récupère les recettes appartenant à une catégorie spécifique.
+         */
         // GET: api/Recettes/Categorie/5
         [HttpGet("Categorie/{categorieId}")]
         public async Task<ActionResult<IEnumerable<Recette>>> GetRecettesByCategorie(int categorieId)

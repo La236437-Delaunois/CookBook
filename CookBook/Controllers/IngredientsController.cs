@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.Controllers
 {
+    /**
+     * Contrôleur pour gérer les opérations CRUD sur les ingrédients.
+     */
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]

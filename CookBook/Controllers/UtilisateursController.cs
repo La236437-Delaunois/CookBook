@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.Controllers
 {
+    /**
+     * Contrôleur pour gérer les opérations CRUD sur les utilisateurs.
+     */
     [Route("api/[controller]")]
     [ApiController]
     public class UtilisateursController : ControllerBase
@@ -105,6 +108,14 @@ namespace CookBook.Controllers
 
         // POST: api/Utilisateurs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /**
+         * Crée un nouvel utilisateur.
+         * Il valide que le pseudo et l'email sont uniques et que le RoleId est valide.
+         * Il hache également le mot de passe avant de le stocker.
+         * 
+         * @param utilisateur L'utilisateur à créer.
+         * @return L'utilisateur créé avec son ID.
+         */
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult<Utilisateur>> PostUtilisateur(Utilisateur utilisateur)
@@ -155,6 +166,13 @@ namespace CookBook.Controllers
             return CreatedAtAction("GetUtilisateur", new { id = utilisateur.Id }, utilisateur);
         }
 
+        /**
+         * Authentifie un utilisateur et génère un token JWT.
+         * 
+         * @param Pseudo Le pseudo de l'utilisateur.
+         * @param MotDePasse Le mot de passe de l'utilisateur.
+         * @return Le token JWT si l'authentification réussit, sinon une erreur BadRequest.
+         */
         [HttpPost("/login")]
         [AllowAnonymous]
         public async Task<ActionResult<Utilisateur>> Login([FromForm] string Pseudo, [FromForm] string MotDePasse)

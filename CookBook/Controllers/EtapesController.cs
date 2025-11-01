@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.Controllers
 {
+    /**
+     * Contrôleur pour gérer les opérations CRUD sur les étapes des recettes.
+     */
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -71,6 +74,13 @@ namespace CookBook.Controllers
             return etapes;
         }
 
+        /**
+         * Met à jour une étape.
+         * Seul l'owner de la recette ou un admin peut effectuer cette opération.
+         * 
+         * @param id L'ID de l'étape à mettre à jour.
+         * @param etapes L'objet étape avec les nouvelles données.
+         */
         // PUT: api/Etapes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -99,6 +109,12 @@ namespace CookBook.Controllers
 
         // POST: api/Etapes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /**
+         * Crée une nouvelle étape.
+         * Seul l'owner de la recette ou un admin peut effectuer cette opération.
+         * 
+         * @param etapes L'objet étape à créer.
+         */
         [HttpPost]
         public async Task<ActionResult<Etapes>> PostEtapes(Etapes etapes)
         {
@@ -112,6 +128,12 @@ namespace CookBook.Controllers
         }
 
         // DELETE: api/Etapes/5
+        /**
+         * Supprime une étape.
+         * Seul l'owner de la recette ou un admin peut effectuer cette opération.
+         * 
+         * @param id L'ID de l'étape à supprimer.
+         */
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEtapes(int id)
         {
