@@ -9,6 +9,6 @@ namespace CookBook.Models
         // Nom de la catégorie "
         public string nom_categorie { get; set; }
         [JsonIgnore]
-        public List<Recette> Recettes { get; set; }
+        public List<Recette> Recettes { get; set; } = new List<Recette>();
     }
 }
