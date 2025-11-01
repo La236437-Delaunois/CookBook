@@ -70,10 +70,16 @@ using (var scope = app.Services.CreateScope())
     var env = services.GetRequiredService<IWebHostEnvironment>();
     var ctx = services.GetRequiredService<CookBookContext>();
 
-    var sqlPath = Path.Combine(env.ContentRootPath, "DataBase", "seedRole.sql","seedCategorie.sql");
-    if (System.IO.File.Exists(sqlPath))
+    var dataBaseDir = Path.Combine(env.ContentRootPath, "DataBase");
+    var scripts = new[] { "seedRole.sql", "seedCategorie.sql" };
+
+    foreach (var scriptName in scripts)
     {
-        var sql = await System.IO.File.ReadAllTextAsync(sqlPath);
+        var sqlPath = Path.Combine(dataBaseDir, scriptName);
+        if (!File.Exists(sqlPath))
+            continue;
+
+        var sql = await File.ReadAllTextAsync(sqlPath);
         await ctx.Database.ExecuteSqlRawAsync(sql);
     }
 }
