@@ -1,0 +1,27 @@
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Text.Json.Serialization;
+
+namespace CookBook.Models
+{
+    /**
+     * Classe représentant la relation entre une recette et un ingrédient,
+     * incluant la quantité de l'ingrédient dans la recette.
+     */
+    public class RecetteIngredient
+    {
+        public int recetteId { get; set; }
+
+        [JsonIgnore]
+        [ValidateNever]
+        public Recette recette { get; set; }
+
+        public int ingredientId { get; set; }
+
+        [JsonIgnore]
+        [ValidateNever]
+        public Ingredient ingredient { get; set; }
+
+        // Quantité de l'ingrédient dans la recette (ex: "2 tasses", "1 cuillère à soupe", etc.)
+        public string quantite { get; set; }
+    }
+}

@@ -1,0 +1,22 @@
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Text.Json.Serialization;
+
+namespace CookBook.Models
+{
+    /**
+     * Classe représentant une étape dans une recette.
+     */
+    public class Etapes
+    {
+        public int Id { get; set; } 
+        public int titre_etape { get; set; }
+        public string description_etape { get; set; }
+        public int Id_recette { get; set; }
+
+        [JsonIgnore]
+        [ValidateNever]
+        public Recette Recette  { get; set; }
+
+
+    }
+}

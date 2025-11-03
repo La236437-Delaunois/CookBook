@@ -1,0 +1,340 @@
+﻿using CookBook.Data;
+using CookBook.Models;
+using CookBook.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace CookBook.Controllers
+{
+    /**
+     * Contrôleur pour gérer les opérations CRUD sur les utilisateurs.
+     */
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UtilisateursController : ControllerBase
+    {
+        private readonly CookBookContext _context;
+
+        public UtilisateursController(CookBookContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/Utilisateurs
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Utilisateur>>> GetUtilisateur()
+        {
+            return await _context.Utilisateur
+                                 .Include(u => u.Role)
+                                 .ToListAsync();
+        }
+
+        // GET: api/Utilisateurs/5
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<ActionResult<Utilisateur>> GetUtilisateur(int id)
+        {
+            var utilisateur = await _context.Utilisateur
+                                            .Include(u => u.Role)
+                                            .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+
+            return utilisateur;
+        }
+
+        // GET: api/Utilisateurs/5/favoris
+        /**
+         * Récupère les recettes favorites d'un utilisateur.
+         * 
+         * @param id L'ID de l'utilisateur.
+         * @return La liste des recettes favorites de l'utilisateur.
+         */
+        [HttpGet("{id}/favoris")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Recette>>> GetRecettesFavoris(int id)
+        {
+            var utilisateur = await _context.Utilisateur
+                                            .Include(u => u.RecettesFavoris)
+                                            .FirstOrDefaultAsync(u => u.Id == id);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+            return Ok(utilisateur.RecettesFavoris);
+        }
+
+        // PUT: api/Utilisateurs/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PutUtilisateur(int id, Utilisateur utilisateur)
+        {
+            if (id != utilisateur.Id)
+            {
+                return BadRequest();
+            }
+
+            if (!_context.Role.Any(r => r.Id == utilisateur.RoleId))
+            {
+                return BadRequest("RoleId invalide.");
+            }
+
+            var existing = await _context.Utilisateur.FindAsync(id);
+            if (existing == null)
+            {
+                return NotFound();
+            }
+
+            existing.Pseudo = utilisateur.Pseudo;
+            existing.Email = utilisateur.Email;
+            existing.RoleId = utilisateur.RoleId;
+
+            if (!string.IsNullOrEmpty(utilisateur.MotDePasse))
+            {
+                existing.MotDePasse = BCrypt.Net.BCrypt.HashPassword(utilisateur.MotDePasse);
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UtilisateurExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            await _context.Entry(existing).Reference(u => u.Role).LoadAsync();
+
+            return Ok(existing);
+        }
+
+        // POST: api/Utilisateurs
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /**
+         * Crée un nouvel utilisateur.
+         * Il valide que le pseudo et l'email sont uniques et que le RoleId est valide.
+         * Il hache également le mot de passe avant de le stocker.
+         * 
+         * @param utilisateur L'utilisateur à créer.
+         * @return L'utilisateur créé avec son ID.
+         */
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult<Utilisateur>> PostUtilisateur(Utilisateur utilisateur)
+        {
+            utilisateur.Pseudo = utilisateur.Pseudo?.Trim();
+            utilisateur.Email = utilisateur.Email?.Trim();
+
+            if (string.IsNullOrWhiteSpace(utilisateur.Pseudo) ||
+                string.IsNullOrWhiteSpace(utilisateur.Email) ||
+                string.IsNullOrWhiteSpace(utilisateur.MotDePasse))
+            {
+                ModelState.AddModelError("Input", "Pseudo, Email et MotDePasse sont requis.");
+                return ValidationProblem(ModelState);
+            }
+
+            if (!await _context.Role.AnyAsync(r => r.Id == utilisateur.RoleId))
+            {
+                ModelState.AddModelError("RoleId", "RoleId invalide.");
+                return ValidationProblem(ModelState);
+            }
+
+            var pseudoLower = utilisateur.Pseudo.ToLowerInvariant();
+            var emailLower = utilisateur.Email.ToLowerInvariant();
+
+            var pseudoExists = await _context.Utilisateur.AnyAsync(u => u.Pseudo.ToLower() == pseudoLower);
+            var emailExists = await _context.Utilisateur.AnyAsync(u => u.Email.ToLower() == emailLower);
+
+            if (pseudoExists)
+                ModelState.AddModelError("Pseudo", "Le pseudo existe déjà.");
+            if (emailExists)
+                ModelState.AddModelError("Email", "L'email existe déjà.");
+            if (pseudoExists || emailExists)
+                return ValidationProblem(ModelState);
+
+
+            if (utilisateur.MotDePasse != null)
+            {
+                var salt = BCrypt.Net.BCrypt.GenerateSalt();
+                utilisateur.MotDePasse = BCrypt.Net.BCrypt.HashPassword(utilisateur.MotDePasse, salt);
+            }
+
+            _context.Utilisateur.Add(utilisateur);
+            await _context.SaveChangesAsync();
+
+            await _context.Entry(utilisateur).Reference(u => u.Role).LoadAsync();
+
+
+            return CreatedAtAction("GetUtilisateur", new { id = utilisateur.Id }, utilisateur);
+        }
+
+        /**
+         * Authentifie un utilisateur et génère un token JWT.
+         * 
+         * @param Pseudo Le pseudo de l'utilisateur.
+         * @param MotDePasse Le mot de passe de l'utilisateur.
+         * @return Le token JWT si l'authentification réussit, sinon une erreur BadRequest.
+         */
+        [HttpPost("/login")]
+        [AllowAnonymous]
+        public async Task<ActionResult<Utilisateur>> Login([FromForm] string Pseudo, [FromForm] string MotDePasse)
+        {
+            var userExists = UserExists(Pseudo, MotDePasse);
+            if (userExists == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                // Generate Token and return it 
+                var token = new AuthorizationService().CreateToken(userExists);
+                // TODO: Create JSON Model class for returning token structured
+                return Ok(token);
+            }
+        }
+
+        private Utilisateur UserExists(string username, string password)
+        {
+            var user = _context.Utilisateur
+                       .Include(u => u.Role) 
+                       .FirstOrDefault(u => u.Pseudo == username);
+
+            if (user == null) return null;
+
+            try
+            {
+                if (BCrypt.Net.BCrypt.Verify(password, user.MotDePasse ?? string.Empty))
+                    return user;
+            }
+            catch (BCrypt.Net.SaltParseException)
+            {
+                return null;
+            }
+            return null;
+        }
+
+        //POST : api/Utilisateurs/5/favoris/10
+        /**
+         * Ajoute une recette aux favoris de l'utilisateur.
+         * 
+         * @param id L'ID de l'utilisateur.
+         * @param recetteId L'ID de la recette à ajouter aux favoris.
+         * @return NoContent si l'ajout réussit, NotFound si l'utilisateur ou la recette n'existe pas,
+         *         Conflict si la recette est déjà en favoris, Forbid si l'utilisateur n'est pas autorisé.
+         */
+        [HttpPost("{id}/favoris/{recetteId}")]
+        [Authorize]
+        public async Task<IActionResult> AddRecetteFavoris(int id, int recetteId)
+        {
+            var currentUserIdClaim = User.FindFirst("id")?.Value;
+            if (currentUserIdClaim == null || (int.Parse(currentUserIdClaim) != id && !User.IsInRole("Admin")))
+                return Forbid();
+
+            var utilisateur = await _context.Utilisateur
+                                            .Include(u => u.RecettesFavoris)
+                                            .FirstOrDefaultAsync(u => u.Id == id);
+            if (utilisateur == null)
+            {
+                return NotFound("L'utilisateur est inéxistant");
+            }
+            var recette = await _context.Recette.FindAsync(recetteId);
+            if (recette == null)
+            {
+                return NotFound("Recette introuvable");
+            }
+            if (utilisateur.RecettesFavoris == null)
+            {
+                utilisateur.RecettesFavoris = new List<Recette>();
+            }
+
+            if (utilisateur.RecettesFavoris.Any(r => r.Id == recetteId))
+                return Conflict("La recette est déjà en favoris.");
+
+            if (!utilisateur.RecettesFavoris.Any(r => r.Id == recetteId))
+            {
+                utilisateur.RecettesFavoris.Add(recette);
+                await _context.SaveChangesAsync();
+            }
+            return NoContent();
+        }
+
+
+        // DELETE: api/Utilisateurs/5
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteUtilisateur(int id)
+        {
+            var utilisateur = await _context.Utilisateur.FindAsync(id);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+
+            _context.Utilisateur.Remove(utilisateur);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // DELETE: api/Utilisateurs/5/favoris/10
+        /**
+         * Supprime une recette des favoris de l'utilisateur.
+         * 
+         * @param id L'ID de l'utilisateur.
+         * @param recetteId L'ID de la recette à supprimer des favoris.
+         * @return NoContent si la suppression réussit, NotFound si l'utilisateur ou la recette n'existe pas,
+         *         Forbid si l'utilisateur n'est pas autorisé.
+         */
+        [HttpDelete("{id}/favoris/{recetteId}")]
+        [Authorize]
+        public async Task<IActionResult> RemoveRecetteFavoris(int id, int recetteId)
+        {
+            var currentUserIdClaim = User.FindFirst("id")?.Value;
+            if (currentUserIdClaim == null || (int.Parse(currentUserIdClaim) != id && !User.IsInRole("Admin")))
+                return Forbid();
+            var utilisateur = await _context.Utilisateur
+                                            .Include(u => u.RecettesFavoris)
+                                            .FirstOrDefaultAsync(u => u.Id == id);
+            if (utilisateur == null)
+            {
+                return NotFound("L'utilisateur est inéxistant");
+            }
+            var recette = await _context.Recette.FindAsync(recetteId);
+            if (recette == null)
+            {
+                return NotFound("Recette introuvable");
+            }
+            if (utilisateur.RecettesFavoris == null || !utilisateur.RecettesFavoris.Any(r => r.Id == recetteId))
+            {
+                return NotFound("La recette n'est pas dans les favoris.");
+            }
+            utilisateur.RecettesFavoris.Remove(recette);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        private bool UtilisateurExists(int id)
+        {
+            return _context.Utilisateur.Any(e => e.Id == id);
+        }
+    }
+}
