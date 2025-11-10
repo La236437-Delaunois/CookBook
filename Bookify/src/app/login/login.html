@@ -1,0 +1,12 @@
+<div class="login-page">
+  <div class="login-container">
+    <img src="assets/logo_carre.jpg" alt="logo" class="logo" />
+    <label for="inputLogin" class="sr-only"></label>
+    <input #inputLogin type="text" class="form-control" placeholder="Nom d'utilisateur" required="" autofocus="">
+    <label for="inputPassword" class="sr-only"></label>
+    <input #inputPassword type="password" class="form-control" placeholder="Mot de passe" required="">
+    <button class="login-button" mat-raised-button (click)="login(inputLogin.value,inputPassword.value)" >Se connecter</button>
+
+    <a class="lien_inscription" href="#">S'inscrire</a>
+  </div>
+</div>
