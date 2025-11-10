@@ -523,6 +523,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 
+##angular Tools for Visual Studio
+.vscode/
+#Nodes.js Tools for Visual Studio
+node_modules/
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 <<<<<<< HEAD
