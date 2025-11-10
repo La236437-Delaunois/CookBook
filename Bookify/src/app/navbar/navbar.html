@@ -1,1 +1,20 @@
-<p>navbar works!</p>
+<nav [class.open]="isOpen">
+  <img class="logo" src="assets/logo.png" alt="logo">
+  <button class="burger"
+          (click)="toggleMenu()"
+          [attr.aria-expanded]="isOpen"
+          aria-controls="mainmenu"
+          aria-label="Ouvrir le menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul id="mainmenu">
+    <li>Mes anciennes lectures</li>
+    <li>Ma Wishlist</li>
+    <li>Gestion de livre</li>
+    <!-- <li> profil : icône + texte -->
+    <li class="profile">
+      <img class="icone_personnel" src="assets/icone_personnel.png" alt="profil">
+      <span class="profil-text">Profil</span>
+    </li>
+  </ul>
+</nav>
