@@ -1,33 +1,132 @@
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
-nav{
-  padding:14px 20px;
-  display:flex;
-  align-items:center;
-  background:#700005;
+
+nav {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  background: #700005;
   justify-content: space-between;
-}
-/* Logo */
-.logo{
-  height:90px;
-  width:auto;
-  display:block;
-}
-.icone_personnel{
-  height:90px;
+  position: relative;
 }
 
+.logo {
+  height: 90px;
+  width: auto;
+}
 
-nav ul{
-  list-style:none;
-  margin: 20px;;
-  padding:0;
-  display:flex;
-  font-size:35px;
-  font-family: 'Alegreya', sans-serif;
+.icone_personnel {
+  height: 90px;
+}
+
+/* Menu desktop */
+nav ul {
+  list-style: none;
+  margin: 20px 0;
+  padding: 0;
+  display: flex;
+  font-size: 35px;
+  font-family: 'Alegreya', serif;
   color: white;
-  align-items:center;
-  justify-content: space-between;
+  align-items: center;
   gap: 80px;
 }
 
+/* Burger */
+.burger {
+  display: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
+}
 
+.burger span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: #fff;
+  margin: 5px 0;
+  transition: 0.25s ease;
+}
+
+.profil-text{
+    display: none;
+}
+
+/* ----------- RESPONSIVE ----------- */
+@media (max-width: 1350px) {
+  .logo {
+    height: 60px;
+  }
+
+  .icone_personnel {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  nav ul {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: #700005;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.25s ease;
+    font-size: 22px;
+  }
+
+  /* Texte “Profil” */
+  .profil-text {
+    color: white;
+    font-size: 24px;
+    font-family: 'Alegreya', serif;
+    display: none; /* caché par défaut */
+  }
+  /* État ouvert du menu */
+  nav.open ul {
+    max-height: 360px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Animation du burger */
+  nav.open .burger span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  nav.open .burger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  nav.open .burger span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* ---------- AJOUT : swap icône / texte ---------- */
+  /* Par défaut : on montre l’icône, on cache le texte */
+  .profile .icone_personnel {
+    display: inline-block;
+  }
+  .profile .profil-text {
+    display: none;
+  }
+
+  /* Quand le menu est ouvert : on cache l’icône et on montre “Profil” */
+  nav.open .profile .icone_personnel {
+    display: none;
+  }
+  nav.open .profile .profil-text {
+    display: inline-block;
+  }
+}
