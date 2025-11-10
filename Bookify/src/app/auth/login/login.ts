@@ -1,21 +1,28 @@
-import {MatButtonModule} from '@angular/material/button';
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
+import {Component} from '@angular/core';
+import { LoginService } from '../../login-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
+  errorMessage : string = "";
 
-  hide = signal(true);
-  clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide());
-    event.stopPropagation();
+  constructor(private service: LoginService,private router: Router) {}
+
+  login(login: string, password: string){
+    this.service.login(login,password).subscribe({
+      next: ()=>{
+        // Login OK
+        this.router.navigate(['/accueil']);
+      },
+      error: (errorObject)=>{
+        // Login KO
+        this.errorMessage = errorObject.error.error;
+      }
+    });
   }
 }

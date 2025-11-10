@@ -17,35 +17,35 @@
   padding: 30px;
   border-radius: 15px;
   text-align: center;
-}
+ } 
 
-.logo {
-  width: 150px;
-  margin-bottom: 20px;
-  border-radius: 50%;
-  border-style: solid;
-  border-color: #700005;
-}
+  .logo {
+    width: 150px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: #700005;
+  }
 
-.form-control {
-  width: 60%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 10px;
-  font-size: 1em;
-}
+  .form-control {
+    width: 60%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+  }
 
-.login-button {
-  width: 150px;
-  background-color: #700005 !important;
-  color: white !important;
-  font-weight: 500;
-}
+  .login-button {
+    width: 150px;
+    background-color: #700005 !important;
+    color: white !important;
+    font-weight: 500;
+  }
 
-.lien_inscription {
-  display: block;
-  margin-top: 15px;
-  color: #700005;
-  text-decoration: underline;
-}
+  .lien_inscription {
+    display: block;
+    margin-top: 15px;
+    color: #700005;
+    text-decoration: underline;
+  }
