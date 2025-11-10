@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
+nav{
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  background:#700005;
+  justify-content: space-between;
+}
+/* Logo */
+.logo{
+  height:90px;
+  width:auto;
+  display:block;
+}
+.icone_personnel{
+  height:90px;
+}
+
+
+nav ul{
+  list-style:none;
+  margin: 20px;;
+  padding:0;
+  display:flex;
+  font-size:35px;
+  font-family: 'Alegreya', sans-serif;
+  color: white;
+  align-items:center;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+
