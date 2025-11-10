@@ -1,1 +1,19 @@
-<p>infos works!</p>
+<div class="infos-container">
+  <h1 class="titre">{{ livre.titre }}</h1>
+  <p><span class="label">écrit par :</span> {{ livre.auteur }}</p>
+  <p><span class="label">éditeur :</span> {{ livre.editeur }}</p>
+  <p><span class="label">prix :</span> {{ livre.prix }}€</p>
+
+  <p class="resume">{{ livre.resume }}</p>
+
+  <button class="wishlist-btn">Ajouter à ma Wishlist</button>
+
+  <div class="switch-container">
+    <span>Pas lu</span>
+    <label class="switch">
+      <input type="checkbox" [(ngModel)]="lu" />
+      <span class="slider"></span>
+    </label>
+    <span>Lu</span>
+  </div>
+</div>
