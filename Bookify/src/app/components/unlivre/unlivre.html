@@ -1,6 +1,48 @@
 <div class="divlivre">
-    <p class="nomlivre">{{ title }}</p>
-    <button class="btninfolivre">
-        <img src="assets/info.svg" alt="info" class="infolivre">
-    </button>
+    <div class="headerlivre">
+        <p class="nomlivre">{{ book.title }}</p>
+        <button class="btninfolivre" (click)="toggle()">
+            <img [class.visible]="!isOpen" src="assets/info.svg" alt="info" class="infolivre">
+            <img [class.visible]="isOpen" src="assets/croix.svg" alt="close" class="infolivre">
+        </button>
+    </div>
+
+    <div [class.open]="isOpen" class="detailslivre">
+        <div class="livre">
+            <div class="elementlivre">
+                <h3 class="h3">Auteur :</h3>
+                <p>{{ book.author }}</p>
+            </div>
+            <div class="elementlivre">
+                <h3 class="h3">ISBN :</h3>
+                <p>{{ book.isbn }}</p>
+            </div>
+            <div class="elementlivre">
+                <h3 class="h3">Prix :</h3>
+                <p>{{ book.price }}</p>
+            </div>
+            <div class="elementlivre">
+                <h3 class="h3">Description :</h3>
+                <p class="description">{{ book.summary }}</p>
+            </div>
+            <div class="elementlivre">
+                <h3 class="h3">Editeur :</h3>
+                <p>{{ book.publisher }}</p>
+            </div>
+            <div class="elementlivre">
+                <h3 class="h3">Genre :</h3>
+                <p>{{ book.gender }}</p>
+            </div>
+        </div>
+
+        <div class="listebouton">
+            <button>
+                <img src="assets/modifier.svg" alt="modifier" class="iconbouton">
+            </button>
+            <button>
+                <img src="assets/poubelle.svg" alt="supprimer" class="iconbouton">
+            </button>
+        </div>
+    </div>
+
 </div>

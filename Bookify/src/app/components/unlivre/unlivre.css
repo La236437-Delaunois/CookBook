@@ -1,25 +1,101 @@
 .divlivre {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid #3C6F46;
-    padding: 10px;
-    margin: 10px;
+  display: block;
+  border-bottom: 2px solid #3c6f46;
+  padding: 10px;
+  margin: 10px;
+}
+
+.headerlivre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .nomlivre {
-    font-size: 30px;
-    margin: 0;
-    font-family: 'Alegraya', serif;
+  font-size: 30px;
+  margin: 0;
+  font-family: "Alegraya", serif;
 }
 
 .btninfolivre {
-    background: none;
-    border: none;
-    cursor: pointer;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .infolivre {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.infolivre.visible {
+  opacity: 1;
+}
+
+.detailslivre {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailslivre.open {
+    margin-top: 20px;
+  max-height: 500px; 
+  opacity: 1;
+  overflow: visible;
+}
+
+.elementlivre {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.h3 {
+  font-family: "Alegraya", serif;
+  font-size: 24px;
+  color: #700005;
+  margin-top: 0;
+}
+
+.elementlivre p {
+  font-family: "Alata", sans-serif;
+  font-size: 18px;
+  margin-left: 10px;
+  margin-top: 0;
+}
+
+.description {
+  max-width: 600px;
+}
+
+.listebouton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.listebouton button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.listebouton button .iconbouton {
+  width: 30px;
+  height: 30px;
 }
