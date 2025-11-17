@@ -5,16 +5,26 @@ import { Review } from './review';
 import { Gender } from './gender';
 
 export interface Book {
-  id: number; 
-  title: string;     
-  author: string;      
-  isbn: string;       
-  price: number;      
-  description: string;  
-  publisher: string;    
-  genderId: number;     
-  gender?: Gender;     
-  reviews?: Review[];  
+  id: number;
+  title: string;
+  author: string;
+  isbn: string;
+  price: number;
+  description: string;
+  publisher: string;
+  genderId: number;
+  gender?: Gender;
+  reviews?: Review[];
+}
+
+export interface BookCreateDto {
+  title: string;
+  author: string;
+  isbn: string;
+  price: number;
+  description: string;
+  publisher: string;
+  genderId: number;
 }
 
 @Injectable({
@@ -33,8 +43,7 @@ export class BookService {
     return this.http.get<Book>(`${this.apiUrl}/${id}`);
   }
 
-  addBook(book: Book): Observable<Book> {
+  addBook(book: BookCreateDto): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book);
   }
-
 }

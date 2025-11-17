@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupLivreModal } from '../../services/popup-livre-modal';
-import { Book, BookService } from '../../services/book';
+import { Book, BookService, BookCreateDto } from '../../services/book';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './popup-livre.css',
 })
 export class PopupLivre implements OnInit {
+  
   editingBook: Book | null = null;
 
   form = {
@@ -21,19 +22,38 @@ export class PopupLivre implements OnInit {
     price: 0,
     description: '',
     publisher: '',
-    gender: ''
+    genderId: 0
   };
 
-  constructor(public modalService: PopupLivreModal, private bookService: BookService) {}
+  constructor(
+    public modalService: PopupLivreModal,
+    private bookService: BookService
+  ) {}
 
   ngOnInit(): void {
     this.modalService.editingBook$.subscribe(book => {
       this.editingBook = book;
 
       if (book) {
-        this.form = { ...book }; // pré-remplir le formulaire
+        this.form = {
+          title: book.title,
+          author: book.author,
+          isbn: book.isbn,
+          price: book.price,
+          description: book.description,
+          publisher: book.publisher,
+          genderId: book.genderId
+        };
       } else {
-        this.form = { title: '', author: '', price: 0, description: '', isbn: '', publisher: '', genderName: ''  }; // réinitialiser le formulaire
+        this.form = {
+          title: '',
+          author: '',
+          isbn: '',
+          price: 0,
+          description: '',
+          publisher: '',
+          genderId: 0
+        };
       }
     });
   }
@@ -45,9 +65,10 @@ export class PopupLivre implements OnInit {
   submitForm() {
     if (this.editingBook) {
       console.log('Modifier livre', this.form);
-      // appeler updateBook()
+      // TODO: updateBook()
     } else {
-      const newBook: Book = { ...this.form };
+      const newBook: BookCreateDto = { ...this.form };
+
       this.bookService.addBook(newBook).subscribe({
         next: (addedBook) => {
           console.log('Livre ajouté avec succès:', addedBook);
@@ -58,6 +79,7 @@ export class PopupLivre implements OnInit {
         }
       });
     }
+
     this.close();
   }
 }
