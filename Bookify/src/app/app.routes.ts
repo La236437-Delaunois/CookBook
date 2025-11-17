@@ -8,8 +8,8 @@ import { Navbar } from './navbar/navbar';
 export const routes: Routes = [
     {path:'bienvenue', component: PageArrive},
     {path:'tempo', component: Navbar},
-    {path:'login', component: Login},
+    //{path:'login', component: Login},
     {path:'livre/details', component: DetailsLivre},
-    {path:'livresLu', component: LivresLu},
+    {path:'livre/lu', component: LivresLu},
     {path: '', pathMatch:'full', redirectTo: 'bienvenue'}
 ];

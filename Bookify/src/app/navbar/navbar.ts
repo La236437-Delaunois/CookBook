@@ -4,7 +4,7 @@ import { LivresLu } from '../livres-lu/livres-lu';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink,LivresLu],
+  imports: [RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
