@@ -65,3 +65,8 @@ a {
     font-weight: bold;
     text-decoration: none;
 }
+.error {
+  color: #b51212;
+  font-weight: 600;
+  margin: 8px 0 12px;
+}
