@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Login } from '../login/login';
 
 @Component({
   selector: 'app-inscription',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './inscription.html',
   styleUrl: './inscription.css',
 })
