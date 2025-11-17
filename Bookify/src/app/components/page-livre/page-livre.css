@@ -7,3 +7,10 @@
     font-size: 55px;
     color: #3e6542;
 }
+
+.divElement{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
