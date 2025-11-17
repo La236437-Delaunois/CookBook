@@ -5,5 +5,8 @@
         <app-bouton-recherche></app-bouton-recherche>
         <app-ajouter-livre></app-ajouter-livre>
     </div>
-    <app-unlivre></app-unlivre>
+    <app-unlivre 
+    *ngFor="let book of books"
+    [title]="book.title">
+    </app-unlivre>
 </main>

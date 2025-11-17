@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-unlivre',
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './unlivre.css',
 })
 export class Unlivre {
-
+  @Input() title: string = '';
 }
