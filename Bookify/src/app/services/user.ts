@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface User {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   passwordHash: string;
@@ -13,7 +13,7 @@ export interface User {
 @Injectable({
   providedIn: 'root',
 })
-export class User {
+export class UserService {
   apiUrl = "http://localhost:8080/api/users";
 
   constructor(private http: HttpClient) { }
