@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User, UserService } from '../services/user';
 
 
@@ -18,7 +18,7 @@ export class Inscription {
   confirmPassword = '';
   errorMessage = '';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,private routeur :Router) {}
     onSubmit() {
     if (this.password !== this.confirmPassword) {
       this.errorMessage = 'Les mots de passe ne correspondent pas.';
@@ -37,7 +37,8 @@ export class Inscription {
     
     this.userService.createUser(users).subscribe({
       next: (createdUser) => {
-        console.log('Utilisateur créé avec succès :', createdUser);
+        console.log('Utilisateur créé avec succès ');
+        this.routeur.navigate(['/acceuil']);
       },
       error: (error) => {
         console.error('Erreur lors de la création de l\'utilisateur :', error);

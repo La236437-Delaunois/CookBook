@@ -1,0 +1,7 @@
+<div class="liste-livres">
+  <app-carte-livre
+    *ngFor="let livre of livres"
+    [title]="livre.title"
+    [genres]="livre.genres">
+  </app-carte-livre>
+</div>

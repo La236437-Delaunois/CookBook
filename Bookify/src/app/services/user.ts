@@ -14,12 +14,18 @@ export interface User {
   providedIn: 'root',
 })
 export class UserService {
-  apiUrl = "http://localhost:8080/api/users";
+  apiUrl = "https://localhost:7079/api/Users";
 
   constructor(private http: HttpClient) { }
 
-  login(login: string, password: string){
-    return this.http.post<any>(this.apiUrl,{login,password});
+  login(username: string, password: string): Observable<string> {
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    return this.http.post('https://localhost:7079/login', formData, {
+      responseType: 'text'
+    });
   }
 
   getAllUsers(): Observable<User[]> {

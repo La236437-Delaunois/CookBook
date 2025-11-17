@@ -37,10 +37,16 @@
   }
 
   .login-button {
-    width: 150px;
-    background-color: #700005 !important;
-    color: white !important;
-    font-weight: 500;
+   width: 200px;
+   padding: 12px 24px;
+   border-radius: 999px;
+   border: none;
+   cursor: pointer;
+   background-color: #7b1512;   
+   color: #ffffff;
+   font-size: 16px;
+   font-weight: 600;
+   margin-top: 10px;
   }
 
   .lien_inscription {
@@ -49,3 +55,11 @@
     color: #700005;
     text-decoration: underline;
   }
+
+  .error-message {
+  color: red;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+  
