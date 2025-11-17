@@ -32,4 +32,16 @@ export class PageLivre {
       }
     });
   }
+
+  reloadBooks(){
+    this.bookService.getAllBooks().subscribe({
+      next: (data) => {
+        this.books = data;
+        console.log('Books reloaded:', this.books);
+      },
+      error: (error) => {
+        console.error('Error reloading books:', error);
+      }
+    });
+  }
 }

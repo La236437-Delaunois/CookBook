@@ -65,6 +65,15 @@
   font-family: "Alata", sans-serif;
 }
 
+.modal-form select {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: "Alata", sans-serif;
+}
+
 .modal-form button {
   padding: 10px;
   background-color: #3e6542;

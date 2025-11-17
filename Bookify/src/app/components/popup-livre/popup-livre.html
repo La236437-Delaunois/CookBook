@@ -32,7 +32,11 @@
             <input [(ngModel)]="form.publisher" name="publisher">
 
             <label>Genre</label>
-            <input [(ngModel)]="form.genderId" name="genre">
+            <select [(ngModel)]="form.genderId" name="gender">
+                <option *ngFor="let g of genders" [ngValue]="g.id">
+                    {{ g.name }}
+                </option>
+            </select>
 
             <button type="submit">Valider</button>
         </form>

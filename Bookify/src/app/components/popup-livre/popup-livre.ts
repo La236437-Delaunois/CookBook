@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PopupLivreModal } from '../../services/popup-livre-modal';
 import { Book, BookService, BookCreateDto } from '../../services/book';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Gender, GenderService } from '../../services/gender';
 
 @Component({
   selector: 'app-popup-livre',
@@ -12,7 +13,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './popup-livre.css',
 })
 export class PopupLivre implements OnInit {
-  
+  genders: Gender[] = [];
+
   editingBook: Book | null = null;
 
   form = {
@@ -22,17 +24,29 @@ export class PopupLivre implements OnInit {
     price: 0,
     description: '',
     publisher: '',
-    genderId: 0
+    genderId: 0,
   };
+
+  @Output() bookAdded = new EventEmitter<void>();
 
   constructor(
     public modalService: PopupLivreModal,
-    private bookService: BookService
+    private bookService: BookService,
+    private genderService: GenderService
   ) {}
 
   ngOnInit(): void {
-    this.modalService.editingBook$.subscribe(book => {
+    this.modalService.editingBook$.subscribe((book) => {
       this.editingBook = book;
+
+      this.genderService.getAllGenders().subscribe({
+        next: (genders: Gender[]) => {
+          this.genders = genders;
+        },
+        error: (error: any) => {
+          console.error('Erreur lors de la récupération des genres:', error);
+        },
+      });
 
       if (book) {
         this.form = {
@@ -42,7 +56,7 @@ export class PopupLivre implements OnInit {
           price: book.price,
           description: book.description,
           publisher: book.publisher,
-          genderId: book.genderId
+          genderId: Number(book.genderId),
         };
       } else {
         this.form = {
@@ -52,7 +66,7 @@ export class PopupLivre implements OnInit {
           price: 0,
           description: '',
           publisher: '',
-          genderId: 0
+          genderId: 0,
         };
       }
     });
@@ -68,15 +82,15 @@ export class PopupLivre implements OnInit {
       // TODO: updateBook()
     } else {
       const newBook: BookCreateDto = { ...this.form };
-
       this.bookService.addBook(newBook).subscribe({
         next: (addedBook) => {
           console.log('Livre ajouté avec succès:', addedBook);
+          this.bookAdded.emit();
           this.modalService.closeModal();
         },
         error: (error) => {
-          console.error('Erreur lors de l\'ajout du livre:', error);
-        }
+          console.error("Erreur lors de l'ajout du livre:", error);
+        },
       });
     }
 
