@@ -1,11 +1,13 @@
 <div class="page-background">
   <div class="book-list">
     <h2 class="readBookTitle">Mes anciennes lectures</h2>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
     <div class="book-card" *ngFor="let livre of livres">
-      <h3>{{ livre.titre }}</h3>
-      <div class="stars">
-        <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= livre.note">★</span>
-      </div>
-    </div>
+      <h3>{{ livre.title }}</h3>
+
+      <button class="del-button" (click)="removeBook(livre.bookId)">Supprimer</button>
+    </div> 
   </div>
 </div>
