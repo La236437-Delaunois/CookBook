@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PopupLivreModal } from '../../services/popup-livre-modal';
 
 @Component({
   selector: 'app-ajouter-livre',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './ajouter-livre.css',
 })
 export class AjouterLivre {
-
+  constructor(private popupLivreModal: PopupLivreModal) {}
+  openModal(): void {
+    this.popupLivreModal.openModal();
+  }
 }
