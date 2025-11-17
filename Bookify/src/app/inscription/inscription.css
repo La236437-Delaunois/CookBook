@@ -1,0 +1,72 @@
+.inscription-page{
+    height: 100vh;
+    background-image: url('/assets/fond_pageCoEtIns.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.logo{
+    width: 150px;
+    display: block;
+    margin: 20px auto;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.form-group input {
+  padding: 12px 20px;
+  border-radius: 999px;           
+  border: none;
+  outline: none;
+  background-color: #ffffff;
+  font-size: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.form-group input::placeholder {
+  color: #777;
+}
+
+.btn-submit {
+  width: 200px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background-color: #7b1512;   
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+}
+
+.btn-submit:hover {
+  background-color: #5f0f0d;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+a {
+    color: #700005;
+    font-weight: bold;
+    text-decoration: none;
+}
+.error {
+  color: #b51212;
+  font-weight: 600;
+  margin: 8px 0 12px;
+}
