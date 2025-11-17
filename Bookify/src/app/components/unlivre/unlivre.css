@@ -1,0 +1,25 @@
+.divlivre {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #3C6F46;
+    padding: 10px;
+    margin: 10px;
+}
+
+.nomlivre {
+    font-size: 30px;
+    margin: 0;
+    font-family: 'Alegraya', serif;
+}
+
+.btninfolivre {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.infolivre {
+    width: 30px;
+    height: 30px;
+}
