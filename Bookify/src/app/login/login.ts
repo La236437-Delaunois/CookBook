@@ -1,27 +1,29 @@
 import { Component } from '@angular/core';
-import { User, UserService } from '../services/user';
+import { UserService } from '../services/user';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
+
 export class Login {
   errorMessage : string = "";
 
   constructor(private service: UserService,private router: Router) {}
 
-  login(login: string, password: string){
-    this.service.login(login,password).subscribe({
-      next: ()=>{
-        // Login OK
-        this.router.navigate(['/accueil']);
+  login(username: string, password: string) {
+    this.service.login(username, password).subscribe({
+      next: (token) => {
+        localStorage.setItem('token', token);
+        this.router.navigate(['/acceuil']);
       },
-      error: (errorObject)=>{
-        // Login KO
-        this.errorMessage = errorObject.error.error;
+      error: () => {
+        this.errorMessage = "Mot de passe ou nom d'utilisateur incorrect";
       }
     });
   }
