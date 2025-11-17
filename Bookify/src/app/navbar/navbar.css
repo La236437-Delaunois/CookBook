@@ -18,6 +18,16 @@ nav {
   height: 90px;
 }
 
+li{
+ cursor: pointer;
+}
+
+a{
+ color:#fff;
+ text-decoration: none;
+}
+
+
 /* Menu desktop */
 nav ul {
   list-style: none;
