@@ -38,7 +38,7 @@ export class Inscription {
     this.userService.createUser(users).subscribe({
       next: (createdUser) => {
         console.log('Utilisateur créé avec succès ');
-        this.routeur.navigate(['/livre/lu']);
+        this.routeur.navigate(['/acceuil']);
       },
       error: (error) => {
         console.error('Erreur lors de la création de l\'utilisateur :', error);

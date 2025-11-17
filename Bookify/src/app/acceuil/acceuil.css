@@ -1,0 +1,14 @@
+.liste-livres {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+  justify-content: center;
+}
+
+@media (max-width: 950px) { 
+  .liste-livres {
+    flex-direction: column; /* empile les cartes */
+    align-items: center;    /* centre les cartes */
+    gap: 25px;
+  }
+}

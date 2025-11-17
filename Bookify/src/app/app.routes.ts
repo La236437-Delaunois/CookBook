@@ -5,6 +5,7 @@ import { LivresLu } from './livres-lu/livres-lu';
 import { DetailsLivre } from './details-livre/details-livre';
 import { Navbar } from './navbar/navbar';
 import { Inscription } from './inscription/inscription';
+import { Acceuil } from './acceuil/acceuil';
 
 export const routes: Routes = [
     {path:'bienvenue', component: PageArrive},
@@ -13,5 +14,6 @@ export const routes: Routes = [
     {path:'livre/details', component: DetailsLivre},
     {path:'livre/lu', component: LivresLu},
     {path:'inscription', component: Inscription},
+    {path:'acceuil', component: Acceuil},
     {path: '', pathMatch:'full', redirectTo: 'bienvenue'}
 ];
