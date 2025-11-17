@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupLivreModal } from '../../services/popup-livre-modal';
-import { Book } from '../../services/book';
+import { Book, BookService } from '../../services/book';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -17,11 +17,14 @@ export class PopupLivre implements OnInit {
   form = {
     title: '',
     author: '',
+    isbn: '',
     price: 0,
-    description: ''
+    description: '',
+    publisher: '',
+    gender: ''
   };
 
-  constructor(public modalService: PopupLivreModal) {}
+  constructor(public modalService: PopupLivreModal, private bookService: BookService) {}
 
   ngOnInit(): void {
     this.modalService.editingBook$.subscribe(book => {
@@ -30,7 +33,7 @@ export class PopupLivre implements OnInit {
       if (book) {
         this.form = { ...book }; // pré-remplir le formulaire
       } else {
-        this.form = { title: '', author: '', price: 0, description: '' };
+        this.form = { title: '', author: '', price: 0, description: '', isbn: '', publisher: '', genderName: ''  }; // réinitialiser le formulaire
       }
     });
   }
@@ -44,8 +47,16 @@ export class PopupLivre implements OnInit {
       console.log('Modifier livre', this.form);
       // appeler updateBook()
     } else {
-      console.log('Ajouter livre', this.form);
-      // appeler createBook()
+      const newBook: Book = { ...this.form };
+      this.bookService.addBook(newBook).subscribe({
+        next: (addedBook) => {
+          console.log('Livre ajouté avec succès:', addedBook);
+          this.modalService.closeModal();
+        },
+        error: (error) => {
+          console.error('Erreur lors de l\'ajout du livre:', error);
+        }
+      });
     }
     this.close();
   }

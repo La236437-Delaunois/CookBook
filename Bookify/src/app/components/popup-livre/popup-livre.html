@@ -19,11 +19,20 @@
             <label>Auteur</label>
             <input [(ngModel)]="form.author" name="author">
 
+            <label>ISBN</label>
+            <input [(ngModel)]="form.isbn" name="isbn">
+
             <label>Prix</label>
             <input type="number" [(ngModel)]="form.price" name="price">
 
             <label>Description</label>
             <textarea [(ngModel)]="form.description" name="description"></textarea>
+
+            <label>Editeur</label>
+            <input [(ngModel)]="form.publisher" name="publisher">
+
+            <label>Genre</label>
+            <input [(ngModel)]="form.genderName" name="genre">
 
             <button type="submit">Valider</button>
         </form>
