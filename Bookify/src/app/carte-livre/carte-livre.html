@@ -1,1 +1,9 @@
-<p>carte-livre works!</p>
+<div class="carte-livre">
+  <h2 class="titre">{{ title }}</h2>
+
+  <div class="genres">
+    <span class="genre" *ngFor="let genre of genres">
+      {{ genre }}
+    </span>
+  </div>
+</div>
