@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReadBookService, ReadBook } from '../services/read-book';
 
 @Component({
   selector: 'app-livres-lu',
@@ -8,10 +9,32 @@ import { CommonModule } from '@angular/common';
   styleUrl: './livres-lu.css',
 })
 export class LivresLu {
-   livres = [
-    { titre: 'La belle au bois dormant', note: 4 },
-    { titre: 'Fahrenheit 451', note: 3 },
-    { titre: 'La femme de ménage', note: 2 }
-  ];
+  livres: ReadBook[] = [];
+  errorMessage: string = "";
 
+  userId: number = 1;
+
+  constructor(private service: ReadBookService) {}
+
+  ngOnInit(): void {
+    this.loadReadBooks();
+  }
+
+  loadReadBooks(): void {
+    this.service.getReadBooks(this.userId).subscribe({
+      next: (data) => {
+        this.livres = data;
+      },
+      error: () => {
+        this.errorMessage = "Impossible de charger vos lectures.";
+      }
+    });
+  }
+
+  removeBook(bookId: number): void {
+    this.service.removeReadBook(bookId, this.userId).subscribe({
+      next: () => this.loadReadBooks(),
+      error: () => this.errorMessage = "Erreur lors de la suppression du livre."
+    });
+  }
 }
