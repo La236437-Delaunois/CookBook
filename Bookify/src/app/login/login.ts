@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../login-service';
+import { User, UserService } from '../services/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class Login {
   errorMessage : string = "";
 
-  constructor(private service: LoginService,private router: Router) {}
+  constructor(private service: UserService,private router: Router) {}
 
   login(login: string, password: string){
     this.service.login(login,password).subscribe({
