@@ -1,1 +1,32 @@
-<p>popup-livre works!</p>
+<div class="modal-backdrop" *ngIf="(modalService.modalState$ | async)" (click)="close()"></div>
+
+<div class="modal" *ngIf="(modalService.modalState$ | async)">
+
+    <div class="modal-content" (click)="$event.stopPropagation()" style="position:relative;">
+
+        <!-- Bouton de fermeture (utilise la croix SVG dans assets) -->
+        <button class="modal-close" (click)="close()">
+            <img src="assets/croix.svg" alt="Fermer" class="croix">
+        </button>
+
+        <h2 class="modal-title">{{ editingBook ? 'Modifier un livre' : 'Ajouter un livre' }}</h2>
+
+        <form (ngSubmit)="submitForm()" class="modal-form">
+
+            <label>Titre</label>
+            <input [(ngModel)]="form.title" name="title">
+
+            <label>Auteur</label>
+            <input [(ngModel)]="form.author" name="author">
+
+            <label>Prix</label>
+            <input type="number" [(ngModel)]="form.price" name="price">
+
+            <label>Description</label>
+            <textarea [(ngModel)]="form.description" name="description"></textarea>
+
+            <button type="submit">Valider</button>
+        </form>
+
+    </div>
+</div>

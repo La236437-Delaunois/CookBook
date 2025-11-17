@@ -4,10 +4,11 @@ import { AjouterLivre } from '../ajouter-livre/ajouter-livre';
 import { Unlivre } from '../unlivre/unlivre';
 import { CommonModule } from '@angular/common';
 import { Book, BookService } from '../../services/book';
+import { PopupLivre } from "../popup-livre/popup-livre";
 
 @Component({
   selector: 'app-page-livre',
-  imports: [BoutonRecherche, AjouterLivre, Unlivre, CommonModule],
+  imports: [BoutonRecherche, AjouterLivre, Unlivre, CommonModule, PopupLivre],
   templateUrl: './page-livre.html',
   styleUrl: './page-livre.css',
 })
