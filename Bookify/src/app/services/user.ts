@@ -22,8 +22,8 @@ export class User {
     return this.http.post<any>(this.apiUrl,{login,password});
   }
 
-  getAllUsers(): Observable<User> {
-    return this.http.get<User>(this.apiUrl);
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
   }
 
   getUserById(userId: number): Observable<User>{
