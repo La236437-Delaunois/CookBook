@@ -14,17 +14,14 @@ export interface User {
   providedIn: 'root',
 })
 export class UserService {
-  apiUrl = "https://localhost:7079/api/Users";
+  apiUrl = "http://localhost:5211/api/Users";
 
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string): Observable<string> {
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('password', password);
-
-    return this.http.post('https://localhost:7079/login', formData, {
-      responseType: 'text'
+  login(username: string, password: string): Observable<any> {
+    return this.http.post('http://localhost:5211/api/Users/login', {
+      Username: username,
+      Password: password
     });
   }
 
@@ -42,10 +39,6 @@ export class UserService {
 
   updateUser(userId: number, user: User): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${userId}`, user);
-  }
-  
-  deleteUser(userId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${userId}`);
   }
 
 }
