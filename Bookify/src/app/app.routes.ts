@@ -11,7 +11,7 @@ export const routes: Routes = [
     {path:'bienvenue', component: PageArrive},
     {path:'tempo', component: Navbar},
     {path:'login', component: Login},
-    {path:'livre/details', component: DetailsLivre},
+    {path:'livre/details/:id', component: DetailsLivre},
     {path:'livre/lu', component: LivresLu},
     {path:'inscription', component: Inscription},
     {path:'acceuil', component: Acceuil},
