@@ -77,6 +77,13 @@ export class PopupLivre implements OnInit {
   }
 
   submitForm() {
+    if (this.form.genderId === 0 || !this.form.genderId) {
+      alert('Veuillez sélectionner un genre');
+      return;
+    }
+
+    console.log('Form valide:', this.form);
+
     if (this.editingBook) {
       console.log('Modifier livre', this.form);
       // TODO: updateBook()

@@ -33,6 +33,7 @@
 
             <label>Genre</label>
             <select [(ngModel)]="form.genderId" name="gender">
+                <option value="0" disabled>-- Sélectionnez un genre --</option>
                 <option *ngFor="let g of genders" [ngValue]="g.id">
                     {{ g.name }}
                 </option>
