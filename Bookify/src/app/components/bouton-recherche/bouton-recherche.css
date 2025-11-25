@@ -1,0 +1,22 @@
+.divRechercherLivre {
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: 250px;
+    background-color: #FFFFFF;
+}
+
+.loupe {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.inputRechercheLivre {
+    border: none;
+    outline: none;
+    font-size: 18px;
+    font-family: 'Alata', sans-serif;
+}

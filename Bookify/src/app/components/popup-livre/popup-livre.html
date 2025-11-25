@@ -1,0 +1,48 @@
+<div class="modal-backdrop" *ngIf="(modalService.modalState$ | async)" (click)="close()"></div>
+
+<div class="modal" *ngIf="(modalService.modalState$ | async)">
+
+    <div class="modal-content" (click)="$event.stopPropagation()" style="position:relative;">
+
+        <!-- Bouton de fermeture (utilise la croix SVG dans assets) -->
+        <button class="modal-close" (click)="close()">
+            <img src="assets/croix.svg" alt="Fermer" class="croix">
+        </button>
+
+        <h2 class="modal-title">{{ editingBook ? 'Modifier un livre' : 'Ajouter un livre' }}</h2>
+
+        <form (ngSubmit)="submitForm()" class="modal-form">
+
+            <label>Titre</label>
+            <input [(ngModel)]="form.title" name="title">
+
+            <label>Auteur</label>
+            <input [(ngModel)]="form.author" name="author">
+
+            <label>ISBN</label>
+            <input [(ngModel)]="form.isbn" name="isbn">
+
+            <label>Prix</label>
+            <input type="number" [(ngModel)]="form.price" name="price">
+
+            <label>Description</label>
+            <textarea [(ngModel)]="form.description" name="description"></textarea>
+
+            <label>Editeur</label>
+            <input [(ngModel)]="form.publisher" name="publisher">
+
+            <label>Genre</label>
+            <select [(ngModel)]="form.genderId" name="gender">
+                <option value="0" disabled>-- Sélectionnez un genre --</option>
+                <option *ngFor="let g of genders" [ngValue]="g.id">
+                    {{ g.name }}
+                </option>
+            </select>
+
+            <button type="submit">
+                {{ editingBook ? 'Modifier' : 'Ajouter' }}
+            </button>
+        </form>
+
+    </div>
+</div>

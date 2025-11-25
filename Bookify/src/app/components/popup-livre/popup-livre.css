@@ -1,0 +1,95 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.25s ease;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: fadeIn 0.25s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.croix {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+.modal-title {
+  text-align: left;
+  margin-bottom: 20px;
+  font-family: "Alegreya", serif;
+}
+
+.modal-content {
+  background: #faf4e6;
+  padding: 20px;
+  border-radius: 15px;
+  width: 400px;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-form label {
+  margin-bottom: 5px;
+  font-family: "Alegreya", serif;
+}
+
+.modal-form input,
+.modal-form textarea {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: "Alata", sans-serif;
+}
+
+.modal-form select {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: "Alata", sans-serif;
+}
+
+.modal-form button {
+  padding: 10px;
+  background-color: #3e6542;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "Alegreya", serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

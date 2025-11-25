@@ -1,0 +1,15 @@
+<main class="main">
+    <h1 class="h1">Livres</h1>
+    <div class="divElement">
+        <app-bouton-recherche></app-bouton-recherche>
+        <app-ajouter-livre></app-ajouter-livre>
+    </div>
+    
+    <app-popup-livre (bookAdded)="reloadBooks()"></app-popup-livre>
+    <app-unlivre 
+    *ngFor="let book of books"
+    [book]="book"
+    (editBookRequested)="editBook($event)"
+    (deleteBookRequested)="deleteBook($event)">
+    </app-unlivre>
+</main>
