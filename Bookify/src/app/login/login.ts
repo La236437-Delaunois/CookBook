@@ -28,6 +28,7 @@ export class Login {
         this.cookieService.set('isConnected', '1');
         this.cookieService.set('userId', response.user.id);
         this.cookieService.set('username', response.user.username);
+        this.cookieService.set('username', username.trim(), { path: '/' });
         console.log('Nouveaux cookies définis:', this.cookieService.getAll());
         this.router.navigate(['/acceuil']);
       },
