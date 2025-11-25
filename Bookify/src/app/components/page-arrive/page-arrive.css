@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+.main_pagearrive{
+    height: 100vh;
+    background-image: url('/assets/fond_pageArrive.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div_pagearrive{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.img{
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.btn{
+    display: block;
+    margin-top: 25px;
+    background-color: #700005 !important;
+    color: white !important;
+    width: 150px;
+    font-family: 'Alata', sans-serif;
+}
