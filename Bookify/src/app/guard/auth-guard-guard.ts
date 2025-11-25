@@ -9,8 +9,9 @@ export const authGuardGuard: CanActivateFn = (route, state) => {
   
   console.log('Guard exécuté - Cookie isConnected:', isConnected);
   console.log('Tous les cookies:', cookieService.getAll());
+  const userId = cookieService.get('userId');
   
-  if (isConnected) {
+  if (isConnected && userId && userId !== '') {
     return true;
   } else {
     console.log('Redirection vers /login');

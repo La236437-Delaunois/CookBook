@@ -11,8 +11,14 @@ import { Output, EventEmitter } from '@angular/core';
 })
 export class Unlivre {
   @Input() book: any;
+  @Input() showEditButton = true;
+  @Input() showDeleteButton = true;
+  @Input() deleteButtonText = 'Supprimer';
+  @Input() deleteConfirmMessage?: string;
+
   @Output() editBookRequested = new EventEmitter<Book>();
   @Output() deleteBookRequested = new EventEmitter<Book>();
+  @Output() removeFromWishlistRequested = new EventEmitter<Book>();
 
   isOpen = false;
 
@@ -25,8 +31,27 @@ export class Unlivre {
   }
 
   deleteBook() {
-    if (confirm(`Êtes-vous sûr de vouloir supprimer "${this.book.title}" ?`)) {
-      this.deleteBookRequested.emit(this.book);
+    const message = this.deleteConfirmMessage || 
+                   `Êtes-vous sûr de vouloir supprimer "${this.book.title}" ?`;
+    
+    if (confirm(message)) {
+      if (this.deleteButtonText === 'Retirer de la wishlist') {
+        this.removeFromWishlistRequested.emit(this.book);
+      } else {
+        this.deleteBookRequested.emit(this.book);
+      }
     }
+  }
+
+  getGenreName(): string {
+    if (this.book.genderName) {
+      return this.book.genderName;
+    }
+    
+    if (this.book.genre?.name) {
+      return this.book.genre.name;
+    }
+    
+    return 'Genre non défini';
   }
 }

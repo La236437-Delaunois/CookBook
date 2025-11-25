@@ -11,18 +11,25 @@ import { CookieService } from 'ngx-cookie-service';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-
 export class Login {
-  errorMessage : string = "";
+  errorMessage: string = '';
   users: any[] = [];
-  constructor(private service: UserService, private router: Router, private cookieService: CookieService) {}
+  constructor(
+    private service: UserService,
+    private router: Router,
+    private cookieService: CookieService
+  ) {}
 
   login(username: string, password: string) {
     this.service.login(username, password).subscribe({
-      next: () => {
-        this.cookieService.set('isConnected','1');
+      next: (response) => {
+        this.cookieService.deleteAll();
+
+        this.cookieService.set('isConnected', '1');
+        this.cookieService.set('userId', response.user.id);
+        this.cookieService.set('username', response.user.username);
         this.cookieService.set('username', username.trim(), { path: '/' });
-        console.log('username cookie =', this.cookieService.get('username'));
+        console.log('Nouveaux cookies définis:', this.cookieService.getAll());
         this.router.navigate(['/acceuil']);
       },
       error: () => {
@@ -33,10 +40,13 @@ export class Login {
             console.log('Utilisateurs en DB:', this.users);
           },
           error: (err) => {
-            console.error('Erreur lors de la récupération des utilisateurs:', err);
-          }
+            console.error(
+              'Erreur lors de la récupération des utilisateurs:',
+              err
+            );
+          },
         });
-      }
+      },
     });
   }
 }

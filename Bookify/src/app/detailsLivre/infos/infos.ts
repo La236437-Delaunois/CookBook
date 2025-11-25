@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ReadBookService } from '../../services/read-book';
 import { WishlistService } from '../../services/wishlist';
 import { BookService, Book } from '../../services/book';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-infos',
@@ -15,7 +16,7 @@ import { BookService, Book } from '../../services/book';
 })
 export class Infos implements OnInit {
   lu: boolean = false;
-  userId: number = 1;
+  userId: number = 0;
   livre: Book = {
     id: 0,
     title: '',
@@ -33,15 +34,18 @@ export class Infos implements OnInit {
     private route: ActivatedRoute,
     private bookService: BookService,
     private readBookService: ReadBookService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit() {
+    this.userId = parseInt(this.cookieService.get('userId'));
     const livreId = Number(this.route.snapshot.paramMap.get('id'));
     
     if (livreId) {
       this.chargerLivre(livreId);
       this.verifierStatutLecture(livreId);
+      this.verifierWishlist(livreId);
     }
   }
 
