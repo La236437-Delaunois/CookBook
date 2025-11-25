@@ -43,7 +43,8 @@ export class WishlistService {
   }
 
   addToWishlist(bookId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${bookId}`, {});
+    const userId = this.cookieService.get('userId');
+    return this.http.post(`${this.apiUrl}/${userId}/${bookId}`, {});
   }
 
   removeFromWishlist(bookId: number): Observable<any> {
