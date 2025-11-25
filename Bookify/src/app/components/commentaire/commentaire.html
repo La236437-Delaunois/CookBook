@@ -1,0 +1,21 @@
+<div class="commentaire-container">
+  <h2>Commentaires</h2>
+  
+  <div class="note-section">
+    <label>Note :</label>
+    <select [(ngModel)]="note">
+      <option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{ n }}</option>
+    </select>
+  </div>
+
+  <textarea placeholder="Écrivez un commentaire ..." [(ngModel)]="texte"></textarea>
+
+  <button class="btn-publier" (click)="ajouterCommentaire()">Publier</button>
+
+  <div class="commentaires-list">
+    <div class="commentaire" *ngFor="let c of commentaires">
+      <h4><span class="pseudo">{{ c.nom }}</span> {{ c.note }}/5</h4>
+      <p>{{ c.message }}</p>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReadBookService, ReadBook } from '../services/read-book';
+import { ReadBookService, ReadBook } from '../../services/read-book';
 
 @Component({
   selector: 'app-livres-lu',

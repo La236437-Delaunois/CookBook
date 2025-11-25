@@ -43,13 +43,13 @@ export class Infos implements OnInit {
     const livreId = Number(this.route.snapshot.paramMap.get('id'));
     
     if (livreId) {
-      this.chargerLivre(livreId);
-      this.verifierStatutLecture(livreId);
-      this.verifierWishlist(livreId);
+      this.loadLivre(livreId);
+      this.checkReadStatus(livreId);
+      this.checkWishlist(livreId);
     }
   }
 
-  chargerLivre(id: number) {
+  loadLivre(id: number) {
     this.bookService.getBookById(id).subscribe({
       next: (data) => {
         this.livre = data;
@@ -62,7 +62,7 @@ export class Infos implements OnInit {
     });
   }
 
-  verifierStatutLecture(bookId: number) {
+  checkReadStatus(bookId: number) {
     this.readBookService.getReadBooks().subscribe({
       next: (livresLus) => {
         this.lu = livresLus.some(livre => livre.bookId === bookId);
@@ -71,7 +71,7 @@ export class Infos implements OnInit {
     });
   }
 
-  verifierWishlist(bookId: number) {
+  checkWishlist(bookId: number) {
     this.wishlistService.getWishlist().subscribe({
       next: (wishlist) => {
         this.isInWishlist = wishlist.some(item => item.bookId === bookId);
@@ -80,7 +80,7 @@ export class Infos implements OnInit {
     });
   }
 
-  ajouterWishlist() {
+  addInWishlist() {
     if (!this.livre.id) return;
 
     if (this.isInWishlist) {
@@ -103,7 +103,7 @@ export class Infos implements OnInit {
     }
   }
 
-  onLuChange() {
+  onReadSwitch() {
     if (!this.livre.id) return;
 
     if (this.lu) {

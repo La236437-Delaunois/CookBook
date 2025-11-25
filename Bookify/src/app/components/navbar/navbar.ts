@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterLink,Router } from '@angular/router';
-import { LivresLu } from '../../livres-lu/livres-lu';
+import { LivresLu } from '../livres-lu/livres-lu';
 import { CookieService } from 'ngx-cookie-service';
 import { CommonModule } from '@angular/common';
 
