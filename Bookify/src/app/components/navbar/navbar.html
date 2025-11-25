@@ -1,5 +1,5 @@
 <nav [class.open]="isOpen">
-  <img class="logo" src="assets/logo.png" alt="logo">
+  <a routerLink="/acceuil"><img class="logo" src="assets/logo.png" alt="logo"></a>
   <button class="burger"
           (click)="toggleMenu()"
           [attr.aria-expanded]="isOpen"
@@ -9,12 +9,11 @@
   </button>
   <ul id="mainmenu">
     <li><a routerLink="/livre/lu">Mes anciennes lectures</a></li>
-    <li>Ma Wishlist</li>
-    <li>Gestion de livre</li>
-    <!-- <li> profil : icône + texte -->
-    <li class="profile">
+    <li><a routerLink="/wishlist">Ma Wishlist</a></li>
+    <li><a routerLink="gestionlivre">Gestion de livre</a></li>
+    <li class="profile" (click)="onLogout()" role="button" tabindex="0">
       <img class="icone_personnel" src="assets/icone_personnel.png" alt="profil">
-      <span class="profil-text">Profil</span>
+      <span class="profil-text">Déconnexion</span>
     </li>
   </ul>
 </nav>

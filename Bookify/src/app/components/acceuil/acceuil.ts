@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarteLivre } from '../carte-livre/carte-livre';
 import { NgFor, AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
-import { Book, BookService } from '../services/book';
+import { Book, BookService } from '../../services/book';
 import { Router } from '@angular/router';
 
 @Component({
