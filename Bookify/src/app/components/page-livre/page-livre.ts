@@ -4,7 +4,8 @@ import { AjouterLivre } from '../ajouter-livre/ajouter-livre';
 import { Unlivre } from '../unlivre/unlivre';
 import { CommonModule } from '@angular/common';
 import { Book, BookService } from '../../services/book';
-import { PopupLivre } from "../popup-livre/popup-livre";
+import { PopupLivreModal } from '../../services/popup-livre-modal';
+import { PopupLivre } from '../popup-livre/popup-livre';
 
 @Component({
   selector: 'app-page-livre',
@@ -14,8 +15,9 @@ import { PopupLivre } from "../popup-livre/popup-livre";
 })
 export class PageLivre {
   books: Book[] = [];
+  selectedBookForEdit: Book | null = null;
 
-  constructor(private bookService: BookService) {  }
+  constructor(private bookService: BookService, private popupLivre: PopupLivreModal) {  }
 
   ngOnInit(): void{
     this.loadBooks();
@@ -43,5 +45,9 @@ export class PageLivre {
         console.error('Error reloading books:', error);
       }
     });
+  }
+
+    editBook(book: Book) {
+    this.popupLivre.openModal(book);
   }
 }

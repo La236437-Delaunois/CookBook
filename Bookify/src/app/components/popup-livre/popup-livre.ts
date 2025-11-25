@@ -85,8 +85,17 @@ export class PopupLivre implements OnInit {
     console.log('Form valide:', this.form);
 
     if (this.editingBook) {
-      console.log('Modifier livre', this.form);
-      // TODO: updateBook()
+      const updateData: BookCreateDto = { ...this.form };
+      this.bookService.updateBook(this.editingBook.id, updateData).subscribe({
+        next: (updatedBook) => {
+          console.log('Livre modifié avec succès:', updatedBook);
+          this.bookAdded.emit(); // Recharger la liste
+          this.modalService.closeModal();
+        },
+        error: (error) => {
+          console.error('Erreur lors de la modification du livre:', error);
+        },
+      });
     } else {
       const newBook: BookCreateDto = { ...this.form };
       this.bookService.addBook(newBook).subscribe({

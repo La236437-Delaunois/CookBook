@@ -4,9 +4,11 @@
         <app-bouton-recherche></app-bouton-recherche>
         <app-ajouter-livre></app-ajouter-livre>
     </div>
+    
     <app-popup-livre (bookAdded)="reloadBooks()"></app-popup-livre>
     <app-unlivre 
     *ngFor="let book of books"
-    [book]="book">
+    [book]="book"
+    (editBookRequested)="editBook($event)">
     </app-unlivre>
 </main>

@@ -46,4 +46,9 @@ export class BookService {
   addBook(book: BookCreateDto): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book);
   }
+
+  updateBook(id: number, book: BookCreateDto): Observable<Book> {
+    const updateData = { id, ...book };
+    return this.http.put<Book>(`${this.apiUrl}/${id}`, updateData);
+  }
 }
