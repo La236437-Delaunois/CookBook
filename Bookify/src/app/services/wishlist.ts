@@ -47,6 +47,7 @@ export class WishlistService {
   }
 
   removeFromWishlist(bookId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${bookId}`);
+    const userId = this.cookieService.get('userId');
+    return this.http.delete(`${this.apiUrl}/${userId}/${bookId}`);
   }
 }

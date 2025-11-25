@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Unlivre } from '../unlivre/unlivre';
 import { WishlistService, Wishlist } from '../../services/wishlist';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
   templateUrl: './page-wishlist.html',
   styleUrl: './page-wishlist.css',
 })
-export class PageWishlist {
+export class PageWishlist implements OnInit {
   wishlistBooks: Wishlist[] = [];
   username: string = '';
 
