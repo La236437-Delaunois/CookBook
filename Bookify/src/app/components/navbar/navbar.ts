@@ -16,10 +16,14 @@ export class Navbar {
 
    showLogout = false;
 
-  constructor(private router: Router,private cookieService: CookieService) {}
+  constructor(private router: Router,public cookieService: CookieService) {}
 
   onLogout() {
         this.cookieService.set('isConnected','0');
+        this.cookieService.delete('username', '/');
         this.router.navigate(['/login']);
 }
+   get isAdmin(): boolean {
+    return this.cookieService.get('username').trim().toLowerCase() === 'admin';
+  }
 }

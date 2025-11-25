@@ -21,6 +21,8 @@ export class Login {
     this.service.login(username, password).subscribe({
       next: () => {
         this.cookieService.set('isConnected','1');
+        this.cookieService.set('username', username.trim(), { path: '/' });
+        console.log('username cookie =', this.cookieService.get('username'));
         this.router.navigate(['/acceuil']);
       },
       error: () => {
