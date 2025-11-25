@@ -4,10 +4,10 @@ import { Login } from './login/login';
 import { PageArrive } from './page-arrive/page-arrive';
 import { LivresLu } from './livres-lu/livres-lu';
 import { DetailsLivre } from './details-livre/details-livre';
-import { Navbar } from './navbar/navbar';
+import { Navbar } from './components/navbar/navbar';
 import { PageLivre } from './components/page-livre/page-livre';
-import { Inscription } from './inscription/inscription';
-import { Acceuil } from './acceuil/acceuil';
+import { Inscription } from './components/inscription/inscription';
+import { Acceuil } from './components/acceuil/acceuil';
 
 export const routes: Routes = [
     {path:'bienvenue', component: PageArrive},

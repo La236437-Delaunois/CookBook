@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { LivresLu } from '../livres-lu/livres-lu';
+import { LivresLu } from '../../livres-lu/livres-lu';
 
 @Component({
   selector: 'app-navbar',
