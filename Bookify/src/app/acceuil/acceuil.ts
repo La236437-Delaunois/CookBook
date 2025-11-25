@@ -1,28 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CarteLivre } from '../carte-livre/carte-livre';
-import { NgFor } from '@angular/common';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { Book, BookService } from '../services/book';
 
 @Component({
   selector: 'app-acceuil',
   standalone: true,
-  imports: [NgFor,CarteLivre],
+  imports: [NgFor, AsyncPipe, CarteLivre],
   templateUrl: './acceuil.html',
-  styleUrl: './acceuil.css',
+  styleUrls: ['./acceuil.css'],
 })
-export class Acceuil {
- livres = [
-  {
-    title: "La belle au bois dormant",
-    genres: ["Fantasy", "Roman"]
-  },
-  {
-    title: "Fahrenheit 451",
-    genres: ["Sci-fi", "Roman"]
-  },
-  {
-    title: "La femme de ménage",
-    genres: ["Thriller", "Policier"]
+export class Acceuil implements OnInit {
+  livres$!: Observable<Book[]>;
+  constructor(private bookService: BookService) {}
+  ngOnInit() {
+    this.livres$ = this.bookService.getAllBooks();
   }
-];
-
 }
