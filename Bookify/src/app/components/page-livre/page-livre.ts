@@ -17,9 +17,12 @@ export class PageLivre {
   books: Book[] = [];
   selectedBookForEdit: Book | null = null;
 
-  constructor(private bookService: BookService, private popupLivre: PopupLivreModal) {  }
+  constructor(
+    private bookService: BookService,
+    private popupLivre: PopupLivreModal
+  ) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.loadBooks();
   }
 
@@ -31,11 +34,11 @@ export class PageLivre {
       },
       error: (error) => {
         console.error('Error loading books:', error);
-      }
+      },
     });
   }
 
-  reloadBooks(){
+  reloadBooks() {
     this.bookService.getAllBooks().subscribe({
       next: (data) => {
         this.books = data;
@@ -43,11 +46,24 @@ export class PageLivre {
       },
       error: (error) => {
         console.error('Error reloading books:', error);
-      }
+      },
     });
   }
 
-    editBook(book: Book) {
+  editBook(book: Book) {
     this.popupLivre.openModal(book);
+  }
+
+  deleteBook(book: Book) {
+    this.bookService.deleteBook(book.id).subscribe({
+      next: () => {
+        console.log('Livre supprimé avec succès');
+        this.reloadBooks();
+      },
+      error: (error) => {
+        console.error('Erreur lors de la suppression:', error);
+        alert('Erreur lors de la suppression du livre');
+      },
+    });
   }
 }

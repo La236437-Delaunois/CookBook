@@ -10,8 +10,9 @@ import { Output, EventEmitter } from '@angular/core';
   styleUrl: './unlivre.css',
 })
 export class Unlivre {
-  @Input() book:any;
+  @Input() book: any;
   @Output() editBookRequested = new EventEmitter<Book>();
+  @Output() deleteBookRequested = new EventEmitter<Book>();
 
   isOpen = false;
 
@@ -21,5 +22,11 @@ export class Unlivre {
 
   editBook() {
     this.editBookRequested.emit(this.book);
+  }
+
+  deleteBook() {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer "${this.book.title}" ?`)) {
+      this.deleteBookRequested.emit(this.book);
+    }
   }
 }

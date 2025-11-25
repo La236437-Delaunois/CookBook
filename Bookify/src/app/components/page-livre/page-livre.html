@@ -9,6 +9,7 @@
     <app-unlivre 
     *ngFor="let book of books"
     [book]="book"
-    (editBookRequested)="editBook($event)">
+    (editBookRequested)="editBook($event)"
+    (deleteBookRequested)="deleteBook($event)">
     </app-unlivre>
 </main>
