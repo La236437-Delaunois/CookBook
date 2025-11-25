@@ -1,7 +1,8 @@
 <div class="liste-livres">
   <app-carte-livre
-    *ngFor="let livre of livres"
+    *ngFor="let livre of (livres$ | async) ?? []"
     [title]="livre.title"
-    [genres]="livre.genres">
+    [author]="livre.author"
+    [genderName]="livre.gender?.name ?? ''">
   </app-carte-livre>
 </div>
