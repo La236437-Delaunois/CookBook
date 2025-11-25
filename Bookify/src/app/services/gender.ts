@@ -12,7 +12,7 @@ export interface Gender {
   providedIn: 'root',
 })
 export class GenderService {
-  private apiUrl = 'https://localhost:7079/api/Genders';
+  private apiUrl = 'http://localhost:5211/api/Genders';
   constructor(private http: HttpClient) {}
 
   getAllGenders(): any {
