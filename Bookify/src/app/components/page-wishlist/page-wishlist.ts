@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Unlivre } from '../unlivre/unlivre';
 import { WishlistService, Wishlist } from '../../services/wishlist';
 import { CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -12,11 +13,13 @@ import { CommonModule } from '@angular/common';
 })
 export class PageWishlist {
   wishlistBooks: Wishlist[] = [];
+  username: string = '';
 
-  constructor(private wishlistService: WishlistService){}
+  constructor(private wishlistService: WishlistService, private cookieService: CookieService){}
 
   ngOnInit() {
     this.loadWishlist();
+    this.username = this.cookieService.get('username');
   }
 
   loadWishlist() {
