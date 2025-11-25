@@ -3,6 +3,7 @@ import { CarteLivre } from '../carte-livre/carte-livre';
 import { NgFor, AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Book, BookService } from '../services/book';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-acceuil',
@@ -13,8 +14,11 @@ import { Book, BookService } from '../services/book';
 })
 export class Acceuil implements OnInit {
   livres$!: Observable<Book[]>;
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService,private router :Router) {}
   ngOnInit() {
     this.livres$ = this.bookService.getAllBooks();
+  }
+  onSelectBook(livre: Book) {
+    this.router.navigate(['livre/details/',livre.id]);
   }
 }
