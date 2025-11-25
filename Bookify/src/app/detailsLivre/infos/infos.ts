@@ -63,7 +63,7 @@ export class Infos implements OnInit {
   }
 
   verifierStatutLecture(bookId: number) {
-    this.readBookService.getReadBooks(this.userId).subscribe({
+    this.readBookService.getReadBooks().subscribe({
       next: (livresLus) => {
         this.lu = livresLus.some(livre => livre.bookId === bookId);
       },
@@ -107,7 +107,7 @@ export class Infos implements OnInit {
     if (!this.livre.id) return;
 
     if (this.lu) {
-      this.readBookService.addReadBook(this.livre.id, this.userId).subscribe({
+      this.readBookService.addReadBook(this.livre.id).subscribe({
         next: () => console.log('Livre ajouté aux livres lus'),
         error: (err) => {
           console.error('Erreur lors de l\'ajout aux livres lus:', err);
@@ -115,7 +115,7 @@ export class Infos implements OnInit {
         }
       });
     } else {
-      this.readBookService.removeReadBook(this.livre.id, this.userId).subscribe({
+      this.readBookService.removeReadBook(this.livre.id).subscribe({
         next: () => console.log('Livre retiré des livres lus'),
         error: (err) => {
           console.error('Erreur lors du retrait des livres lus:', err);
