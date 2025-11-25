@@ -11,10 +11,9 @@
     <li><a routerLink="/livre/lu">Mes anciennes lectures</a></li>
     <li><a routerLink="/wishlist">Ma Wishlist</a></li>
     <li><a routerLink="gestionlivre">Gestion de livre</a></li>
-    <!-- <li> profil : icône + texte -->
-    <li class="profile">
+    <li class="profile" (click)="onLogout()" role="button" tabindex="0">
       <img class="icone_personnel" src="assets/icone_personnel.png" alt="profil">
-      <span class="profil-text">Profil</span>
+      <span class="profil-text">Déconnexion</span>
     </li>
   </ul>
 </nav>
