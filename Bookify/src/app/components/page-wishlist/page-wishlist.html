@@ -1,1 +1,14 @@
-<p>page-wishlist works!</p>
+<main class="main">
+    <h1 class="h1">Wishlist</h1>
+    <div class="divElement">
+        <div *ngFor="let book of wishlistBooks">
+            <app-unlivre 
+                [book]="book"
+                [showEditButton]="false"
+                [deleteButtonText]="'Retirer de la wishlist'"
+                [deleteConfirmMessage]="'Retirer ' + book.title + ' de votre wishlist ?'"
+                (removeFromWishlistRequested)="removeFromWishlist(book)">
+            </app-unlivre>
+        </div>
+    </div>
+</main>

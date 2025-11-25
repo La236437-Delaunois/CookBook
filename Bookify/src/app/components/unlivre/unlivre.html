@@ -31,15 +31,15 @@
             </div>
             <div class="elementlivre">
                 <h3 class="h3">Genre :</h3>
-                <p>{{ book.genderName }}</p>
+                <p>{{ getGenreName() }}</p>
             </div>
         </div>
 
         <div class="listebouton">
-            <button (click)="editBook()">
+            <button *ngIf="showEditButton" (click)="editBook()">
                 <img src="assets/modifier.svg" alt="modifier" class="iconbouton">
             </button>
-            <button (click)="deleteBook()">
+            <button *ngIf="showEditButton" (click)="deleteBook()">
                 <img src="assets/poubelle.svg" alt="supprimer" class="iconbouton">
             </button>
         </div>
