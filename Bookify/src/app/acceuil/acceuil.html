@@ -1,5 +1,5 @@
 <div class="liste-livres">
-  <app-carte-livre
+  <app-carte-livre (click)="onSelectBook(livre)"
     *ngFor="let livre of (livres$ | async) ?? []"
     [title]="livre.title"
     [author]="livre.author"
