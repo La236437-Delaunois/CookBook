@@ -18,7 +18,7 @@ export interface ReadBook {
   providedIn: 'root',
 })
 export class ReadBookService {
-  private apiUrl = 'https://localhost:7079/api/LivreLu';
+  private apiUrl = 'http://localhost:5211/api/LivreLu';
 
   constructor(private http: HttpClient) {}
 
