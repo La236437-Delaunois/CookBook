@@ -12,8 +12,6 @@ export class LivresLu {
   livres: ReadBook[] = [];
   errorMessage: string = "";
 
-  userId: number = 1;
-
   constructor(private service: ReadBookService) {}
 
   ngOnInit(): void {
@@ -21,7 +19,7 @@ export class LivresLu {
   }
 
   loadReadBooks(): void {
-    this.service.getReadBooks(this.userId).subscribe({
+    this.service.getReadBooks().subscribe({
       next: (data) => {
         this.livres = data;
       },
@@ -32,7 +30,7 @@ export class LivresLu {
   }
 
   removeBook(bookId: number): void {
-    this.service.removeReadBook(bookId, this.userId).subscribe({
+    this.service.removeReadBook(bookId).subscribe({
       next: () => this.loadReadBooks(),
       error: () => this.errorMessage = "Erreur lors de la suppression du livre."
     });
