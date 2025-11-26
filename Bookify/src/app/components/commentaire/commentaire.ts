@@ -24,8 +24,12 @@ export class Commentaire {
     };
 
   reviews: Review[] = [];
+  paginatedReviews: Review[] = [];
   usernames: { [userId: number]: string } = {};
   currentUserId: number = 0;
+  currentPage: number = 1;
+  reviewsPerPage: number = 3;
+  totalPages: number = 1;
 
   constructor(private reviewService: ReviewService, 
               private cookieService: CookieService, 
@@ -40,7 +44,10 @@ export class Commentaire {
   loadReviews(): void {
     const bookId = Number(this.route.snapshot.paramMap.get('id'));
     this.reviewService.getReviewsByBook(bookId).subscribe((reviews) => {
-      this.reviews = reviews;
+      console.log('Reviews chargées:', reviews);
+      this.reviews = reviews.reverse();
+      this.totalPages = Math.ceil(this.reviews.length / this.reviewsPerPage);
+      this.updatePaginatedReviews();
       
       reviews.forEach(review => {
         this.userService.getUserById(review.userId).subscribe({
@@ -54,6 +61,23 @@ export class Commentaire {
         });
       });
     });
+  }
+
+  updatePaginatedReviews(): void {
+    const startIndex = (this.currentPage - 1) * this.reviewsPerPage;
+    const endIndex = startIndex + this.reviewsPerPage;
+    this.paginatedReviews = this.reviews.slice(startIndex, endIndex);
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePaginatedReviews();
+    }
+  }
+
+  getPageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
   createReview(ratingValue: number, titleValue: string, reviewText: string): void {
