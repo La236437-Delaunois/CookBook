@@ -9,14 +9,14 @@
   <button 
     class="wishlist-btn" 
     [class.active]="isInWishlist"
-    (click)="ajouterWishlist()">
+    (click)="addInWishlist()">
     {{ isInWishlist ? 'Retirer de ma Wishlist' : 'Ajouter à ma Wishlist' }}
   </button>
 
   <div class="switch-container">
     <span>Pas lu</span>
     <label class="switch">
-      <input type="checkbox" [(ngModel)]="lu" (change)="onLuChange()" />
+      <input type="checkbox" [(ngModel)]="lu" (change)="onReadSwitch()" />
       <span class="slider"></span>
     </label>
     <span>Lu</span>

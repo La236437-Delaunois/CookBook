@@ -1,9 +1,0 @@
-.page-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  background-color: #f4efe4;
-  min-height: 100vh;
-  padding: 2rem 4rem;
-  font-family: 'Georgia', serif;
-}
