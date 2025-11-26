@@ -19,7 +19,7 @@ export interface Review {
   providedIn: 'root',
 })
 export class ReviewService {
-  private apiUrl = "http://localhost:5211/api/reviews";
+  private apiUrl = "http://localhost:5211/api/Reviews";
 
   constructor(private http: HttpClient) {}
 
@@ -46,4 +46,5 @@ export class ReviewService {
   deleteReview(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  
 }

@@ -1,21 +1,23 @@
-<div class="commentaire-container">
+<div class="review-container">
   <h2>Commentaires</h2>
-  
-  <div class="note-section">
-    <label>Note :</label>
-    <select [(ngModel)]="note">
-      <option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{ n }}</option>
-    </select>
+  <div class="create-review-container">
+    <div class="note-section">
+      <label>Note :</label>
+      <input type="range" min="1" max="5" [(ngModel)]="newReview.note" />
+      <span class="note-value">{{ newReview.note }}/5</span>
+    </div>
+
+    <input type="text" placeholder="Titre" [(ngModel)]="newReview.titre" />
+    <textarea placeholder="Écrivez un commentaire ..." [(ngModel)]="newReview.avis"></textarea>
+    <button class="btn-create" (click)="createReview(newReview.note, newReview.titre, newReview.avis)">Publier</button>
   </div>
-
-  <textarea placeholder="Écrivez un commentaire ..." [(ngModel)]="texte"></textarea>
-
-  <button class="btn-publier" (click)="ajouterCommentaire()">Publier</button>
-
-  <div class="commentaires-list">
-    <div class="commentaire" *ngFor="let c of commentaires">
-      <h4><span class="pseudo">{{ c.nom }}</span> {{ c.note }}/5</h4>
-      <p>{{ c.message }}</p>
+  
+  <div class="reviews-list">
+    <div class="review" *ngFor="let review of reviews">
+      <h4><span class="pseudo">{{ getUsernameOfReviewer(review.userId) }}</span> {{ review.note }}/5</h4>
+      <h5 class="review-title">{{ review.titre }}</h5>
+      <p>{{ review.avis }}</p>
+      <button *ngIf="currentUserId === review.userId || isAdmin()" (click)="deleteReview(review.id)" class="btn-create">Supprimer le commentaire</button>
     </div>
   </div>
 </div>
