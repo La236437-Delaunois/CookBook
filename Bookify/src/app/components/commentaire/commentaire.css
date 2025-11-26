@@ -2,14 +2,19 @@
   background-color: #e8dfd0;
   padding: 40px;
   font-family: 'Georgia', serif;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .review-container h2 {
   color: #8b1a1a;
-  font-size: 50px;
+  font-size: clamp(32px, 5vw, 60px);
   font-weight: bold;
   text-align: center;
-  margin-top: 5px;
+  margin-top: clamp(20px, 8vh, 90px);
 }
 
 .create-review-container{
@@ -93,6 +98,8 @@ textarea::placeholder {
 .commentaires-list {
   clear: both;
   margin-top: 40px;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .review {
@@ -142,5 +149,134 @@ textarea::placeholder {
   flex: 1;
   max-width: none;
   background-color: #e8dfd0;
+}
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+  padding: 20px 0;
+}
+
+.pagination-btn {
+  background-color: #f5f0e8;
+  color: #8b1a1a;
+  border: 2px solid #8b1a1a;
+  padding: 8px 15px;
+  font-size: 16px;
+  font-family: 'Georgia', serif;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  min-width: 40px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #8b1a1a;
+  color: white;
+}
+
+.pagination-btn.active {
+  background-color: #8b1a1a;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .review-container {
+    padding: 20px;
+    height: auto;
+    overflow-y: visible;
+  }
+
+  .review-container h2 {
+    font-size: 32px;
+    margin-top: 20px;
+  }
+
+
+  .note-section {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 16px;
+  }
+
+  .note-section input[type="range"] {
+    width: 100%;
+  }
+
+  .pseudo {
+    font-size: 20px;
+  }
+
+  .review h4 {
+    font-size: 16px;
+  }
+
+  .review-title {
+    font-size: 16px;
+  }
+
+  .btn-create {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .pagination-btn {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .review-container {
+    height: auto;
+    overflow-y: visible;
+    padding: 30px;
+  }
+
+  .review-container h2 {
+    margin-top: 10px;
+    font-size: 45px;
+  }
+
+  .note-section {
+    font-size: 18px;
+  }
+
+  .pseudo {
+    font-size: 24px;
+  }
+
+  .review h4 {
+    font-size: 18px;
+  }
+
+  .btn-create {
+    font-size: 16px;
+    padding: 10px 25px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .review-container {
+    max-width: none;
+    margin: 0;
+  }
+
+  .review-container h2 {
+    font-size: 60px;
+  }
 }
