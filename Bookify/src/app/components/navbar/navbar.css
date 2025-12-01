@@ -64,6 +64,34 @@ nav ul {
     display: none;
 }
 
+.profile {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;   
+  align-items: center;     
+}
+
+.dropdown {
+  position: absolute;
+  top: 90px;
+  right: 2px;  
+  background:#700005;
+  border-radius: 8px;
+  border: 2px solid;
+  border-color:#F6EFDF;
+  width: 210px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+}
+.dropdown:hover {
+  background-color: #F6EFDF;
+  color: #700005;
+  border-color: #700005;
+}
+
+
+
 /* ----------- RESPONSIVE ----------- */
 @media (max-width: 1350px) {
   .logo {
@@ -123,7 +151,6 @@ nav ul {
     transform: translateY(-8px) rotate(-45deg);
   }
 
-  /* ---------- AJOUT : swap icône / texte ---------- */
   /* Par défaut : on montre l’icône, on cache le texte */
   .profile .icone_personnel {
     display: inline-block;
@@ -131,7 +158,6 @@ nav ul {
   .profile .profil-text {
     display: none;
   }
-
   /* Quand le menu est ouvert : on cache l’icône et on montre “Profil” */
   nav.open .profile .icone_personnel {
     display: none;
