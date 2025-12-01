@@ -4,12 +4,10 @@
   background-color: #41644A;
   border-radius: 20px;
   padding: 25px 15px;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
   color: white;
   text-align: center;
   box-sizing: border-box;
