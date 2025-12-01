@@ -28,6 +28,10 @@
   cursor: pointer;
 }
 
+.btninfolivre img{
+  z-index: -1;
+}
+
 .infolivre {
   width: 30px;
   height: 30px;
@@ -98,4 +102,29 @@
 .listebouton button .iconbouton {
   width: 30px;
   height: 30px;
+}
+
+@media screen and (max-width: 768px) {
+  .btninfolivre img{
+    width: 24px;
+    height: 24px;
+  }
+
+  .nomlivre {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .h3 {
+    font-size: 20px;
+  }
+
+  .elementlivre p {
+    font-size: 16px;
+  }
+
+  .listebouton button .iconbouton {
+    width: 24px;
+    height: 24px;
+  }
 }
