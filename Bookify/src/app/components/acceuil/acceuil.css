@@ -1,8 +1,15 @@
 .liste-livres {
   display: flex;
+  flex-wrap: wrap;        
   gap: 40px;
   padding: 40px;
   justify-content: center;
+}
+
+.liste-livres > .carte-livre {
+  flex: 1 1 calc(25% - 40px); 
+  max-width: 300px;         
+  box-sizing: border-box;
 }
 
 @media (max-width: 950px) { 
