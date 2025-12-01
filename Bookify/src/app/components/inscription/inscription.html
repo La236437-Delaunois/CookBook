@@ -13,14 +13,12 @@
 
                 <input type="password" placeholder="Confirmation du mot de passe" [(ngModel)]="confirmPassword" name="confirmPassword" required/>
             </div>
-            
-             <!-- MESSAGE D’ERREUR -->
              @if (errorMessage !== '') {
                  <p class="error">{{ errorMessage }}</p>
              }
         <button type="submit" class="btn-submit" (click)="onSubmit()">S'inscrire</button>
         <br>
-        <a routerLink="/login">Deja inscrit ?</a>
+        <a routerLink="/login">Déjà inscrit ?</a>
         </form>
      </div> 
 </div>
