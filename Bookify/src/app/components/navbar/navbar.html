@@ -2,18 +2,20 @@
   <a routerLink="/acceuil"><img class="logo" src="assets/logo.png" alt="logo"></a>
   <button class="burger"
           (click)="toggleMenu()"
-          [attr.aria-expanded]="isOpen"
           aria-controls="mainmenu"
-          aria-label="Ouvrir le menu">
+          [attr.aria-expanded]="isOpen"> <!--mise a jour selon l'etat-->
     <span></span><span></span><span></span>
   </button>
   <ul id="mainmenu">
     <li><a routerLink="/livre/lu">Mes anciennes lectures</a></li>
     <li><a routerLink="/wishlist">Ma Wishlist</a></li>
     <li *ngIf="isAdmin" routerLink="/gestionlivre">Gestion de livre</li>
-    <li class="profile" (click)="onLogout()" role="button" tabindex="0">
+    <li class="profile" role="button" tabindex="0" (click)="toggleProfil()" [attr.aria-expanded]="isProfilOpen">
       <img class="icone_personnel" src="assets/icone_personnel.png" alt="profil">
       <span class="profil-text">Déconnexion</span>
+      <ul class="dropdown" *ngIf="isProfilOpen">
+        <li (click)="onLogout()">Déconnexion</li>
+      </ul>
     </li>
   </ul>
 </nav>

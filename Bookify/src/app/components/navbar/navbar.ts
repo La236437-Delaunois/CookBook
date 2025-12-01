@@ -12,9 +12,16 @@ import { CommonModule } from '@angular/common';
 })
 export class Navbar {
   isOpen = false;
-  toggleMenu(force?: boolean){ this.isOpen = force ?? !this.isOpen; }
+  isProfilOpen = false; 
+  toggleMenu(force?: boolean){ 
+    this.isOpen = force ?? !this.isOpen; 
+  }
 
-   showLogout = false;
+  toggleProfil(){ 
+    this.isProfilOpen = !this.isProfilOpen; 
+  }
+
+  showLogout = false;
 
   constructor(private router: Router,public cookieService: CookieService) {}
 
