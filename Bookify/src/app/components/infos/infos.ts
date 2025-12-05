@@ -124,4 +124,9 @@ export class Infos implements OnInit {
       });
     }
   }
+
+  openOnAmazon(): void {
+    const url = this.bookService.getAmazonUrl(this.livre.id);
+    window.open(url, '_blank'); 
+  }
 }
