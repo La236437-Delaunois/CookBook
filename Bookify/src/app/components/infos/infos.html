@@ -6,6 +6,8 @@
   
   <p class="resume">{{ livre.description }}</p>
 
+  <button class="amazon-btn" (click)="openOnAmazon()">Voir sur Amazon</button>
+
   <button 
     class="wishlist-btn" 
     [class.active]="isInWishlist"
