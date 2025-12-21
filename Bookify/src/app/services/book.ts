@@ -62,4 +62,8 @@ export class BookService {
   deleteBook(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getAmazonUrl(bookId: number): string {
+    return `${this.apiUrl}/${bookId}/amazon`;
+  }
 }

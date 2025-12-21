@@ -1,4 +1,4 @@
-  @import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
 
   .login-page{
     height: 100vh;
@@ -28,12 +28,18 @@
   }
 
   .form-control {
-    width: 60%;
-    padding: 10px;
+    padding: 12px 20px;
     margin-bottom: 15px;
+    border-radius: 999px;
     border: none;
-    border-radius: 10px;
-    font-size: 1em;
+    outline: none;
+    background-color: #ffffff;
+    font-size: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .form-control::placeholder {
+    color: #777;
   }
 
   .login-button {
@@ -62,4 +68,3 @@
     font-weight: bold;
   }
 
-  
